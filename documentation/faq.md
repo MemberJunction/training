@@ -126,7 +126,7 @@ Yes! The Abstract Submission Application is an excellent starting point for buil
 
 ### **Where can I find additional resources?**
 - [MemberJunction Documentation](https://docs.memberjunction.org)
-- [Microsoft SQL Server Documentation](https://docs.microsoft.com/en-us/sql/sql-server/)
-- [Angular Documentation](https://angular.io/docs)
+- [Microsoft SQL Server Documentation](https://www.microsoft.com/en-us/sql-server/developer-tools)
+- [Angular Documentation](https://angular.dev/overview)
 
 If you have further questions, feel free to contact [Your Name/Team] at [Your Contact Info].

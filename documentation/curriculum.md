@@ -131,7 +131,7 @@ By the end of the training, participants will:
 
 ## Resources
 - [MemberJunction Documentation](https://docs.memberjunction.org)
-- [SQL Server Documentation](https://docs.microsoft.com/en-us/sql/sql-server/)
-- [Angular Documentation](https://angular.io/docs)
+- [SQL Server Documentation](https://www.microsoft.com/en-us/sql-server/developer-tools)
+- [Angular Documentation](https://angular.dev/overview)
 
 For additional support, contact [Your Name/Team] at [Your Contact Info].
