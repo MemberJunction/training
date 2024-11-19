@@ -3,7 +3,7 @@
     "autoCreateNewUsers": true,
     "newUserLimitedToAuthorizedDomains": false,
     "newUserAuthorizedDomains": [],
-    "newUserRoles": ["UI"],
+    "newUserRoles": ["UI","Integration"],
     "updateCacheWhenNotFound": true,
     "updateCacheWhenNotFoundDelay": 5000,
     "contextUserForNewUserCreation": "amith@bluecypress.io"

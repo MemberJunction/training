@@ -34,6 +34,7 @@ import { BreadcrumbComponent } from './breadcrumb/breadcrumb.component';
 
 import { MenuModule } from '@progress/kendo-angular-menu';
 import { PDFExportModule } from "@progress/kendo-angular-pdf-export";
+import { NewSubmission } from './new-submission/new-submission.component';
 
 
 @NgModule({
@@ -44,7 +45,8 @@ import { PDFExportModule } from "@progress/kendo-angular-pdf-export";
     HomeComponent,
     NoAccessComponent,
     NumberSuffixPipe,
-    BreadcrumbComponent
+    BreadcrumbComponent,
+    NewSubmission,
   ],
   imports: [
     BrowserModule,
