@@ -4,6 +4,8 @@ MJAPI/.env
 MJAPI/node_modules/**
 MJExplorer/node_modules/**
 MJExplorer/.angular/**  
+CustomServerEntities/node_modules/**
+CustomServerEntities/dist/**
 GeneratedEntities/node_modules/**
 GeneratedEntities/dist/**
 GeneratedActions/node_modules/**

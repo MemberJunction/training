@@ -33,6 +33,7 @@
     "class-validator": "^0.14.0",
     "mj_generatedentities": "1.0.0",
     "mj_generatedactions": "1.0.0",
+    "custom-server-entities": "file:../CustomServerEntities",
     "typeorm": "^0.3.20"
   }
 }

@@ -3,6 +3,8 @@ import { serve } from '@memberjunction/server';
 import { resolve } from 'node:path';
 import { LoadGeneratedEntities } from 'mj_generatedentities';
 LoadGeneratedEntities();
+import { LoadCustomServerEntities } from 'custom-server-entities';
+LoadCustomServerEntities();
 import { LoadGeneratedActions } from 'mj_generatedactions';
 LoadGeneratedActions();
 import { LoadProvider } from '@memberjunction/communication-sendgrid';
