@@ -1,14 +1,15 @@
 -- Create schema
 CREATE SCHEMA abstracts;
 GO
-
+ 
 -- SubmissionType table
 CREATE TABLE abstracts.SubmissionType (
     ID UNIQUEIDENTIFIER NOT NULL PRIMARY KEY DEFAULT NEWID(),
     Name NVARCHAR(100) NOT NULL,
     ParentID UNIQUEIDENTIFIER NULL,
     Type NVARCHAR(20) NOT NULL CHECK (Type IN ('Event', 'Publication', 'Other')),
-    Description NVARCHAR(255) NULL
+	SubmissionDeadline DATETIME NULL,
+    Description NVARCHAR(max) NULL
 );
 
 -- Foreign Key Constraint for ParentID
@@ -32,6 +33,14 @@ EXEC sp_addextendedproperty
 
 EXEC sp_addextendedproperty 
     @name = N'MS_Description', 
+    @value = N'Optional, date a submission is due by', 
+    @level0type = N'SCHEMA', @level0name = N'abstracts',
+    @level1type = N'TABLE',  @level1name = N'SubmissionType',
+    @level2type = N'COLUMN', @level2name = N'SubmissionDeadline';
+
+
+EXEC sp_addextendedproperty 
+    @name = N'MS_Description', 
     @value = N'Description of the submission type.', 
     @level0type = N'SCHEMA', @level0name = N'abstracts',
     @level1type = N'TABLE',  @level1name = N'SubmissionType',
@@ -40,8 +49,10 @@ EXEC sp_addextendedproperty
 -- Submission table
 CREATE TABLE abstracts.Submission (
     ID INT IDENTITY(1,1) NOT NULL PRIMARY KEY,
+	SubmittedAt DATETIME NOT NULL DEFAULT (GETDATE()),
     Title NVARCHAR(200) NOT NULL,
     Description NVARCHAR(MAX) NULL,
+	Contents NVARCHAR(MAX) NULL,
     SubmissionTypeID UNIQUEIDENTIFIER NOT NULL,
     Status NVARCHAR(50) NOT NULL
 );
@@ -84,8 +95,15 @@ EXEC sp_addextendedproperty
 CREATE TABLE abstracts.SubmissionRole (
     ID UNIQUEIDENTIFIER NOT NULL PRIMARY KEY DEFAULT NEWID(),
     Name NVARCHAR(100) NOT NULL,
+	SubmissionTypeID UNIQUEIDENTIFIER NULL,
     Description NVARCHAR(255) NULL
 );
+
+-- Foreign Key Constraint for SubmissionTypeID
+ALTER TABLE abstracts.SubmissionRole
+ADD CONSTRAINT FK_SubmissionRole_SubmissionTypeID FOREIGN KEY (SubmissionTypeID)
+REFERENCES abstracts.SubmissionType(ID);
+
 
 -- Extended properties
 EXEC sp_addextendedproperty 
@@ -119,8 +137,15 @@ REFERENCES abstracts.SubmissionRole(ID);
 CREATE TABLE abstracts.ReviewerRole (
     ID UNIQUEIDENTIFIER NOT NULL PRIMARY KEY DEFAULT NEWID(),
     Name NVARCHAR(100) NOT NULL,
+	SubmissionTypeID UNIQUEIDENTIFIER NULL,
     Description NVARCHAR(255) NULL
 );
+
+-- Foreign Key Constraint for SubmissionTypeID
+ALTER TABLE abstracts.ReviewerRole
+ADD CONSTRAINT FK_ReviewerRole_SubmissionTypeID FOREIGN KEY (SubmissionTypeID)
+REFERENCES abstracts.SubmissionType(ID);
+
 
 -- Extended properties
 EXEC sp_addextendedproperty 
@@ -132,12 +157,14 @@ EXEC sp_addextendedproperty
 -- Review table
 CREATE TABLE abstracts.Review (
     ID INT IDENTITY(1,1) NOT NULL PRIMARY KEY,
+	AssignedAt DATETIME NOT NULL DEFAULT (GETDATE()),
     SubmissionID INT NOT NULL,
     ReviewerID INT NOT NULL,
     RoleID UNIQUEIDENTIFIER NOT NULL,
-    Score INT NULL,
-    Comments NVARCHAR(MAX) NULL,
-    Status NVARCHAR(50) NOT NULL
+    Score INT NULL  CHECK (Score >= 0 AND Score <= 100),
+    Status NVARCHAR(50) NOT NULL CHECK (Status IN ('Pending', 'Approved', 'Rejected', 'Undecided')),
+	ReviewedAt DATETIME NULL,
+    Comments NVARCHAR(MAX) NULL
 );
 
 -- Foreign Key Constraints for Review
