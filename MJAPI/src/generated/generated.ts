@@ -48,6 +48,9 @@ export class SubmissionType_ {
     @Field({nullable: true, description: 'Description of the submission type.'}) 
     Description?: string;
         
+    @Field({nullable: true, description: 'Optional, the criteria that should be used to evaluate how good a submission is.'}) 
+    EvaluationCriteria?: string;
+        
     @Field() 
     @MaxLength(10)
     _mj__CreatedAt: Date;
@@ -93,6 +96,9 @@ export class CreateSubmissionTypeInput {
 
     @Field({ nullable: true })
     Description?: string;
+
+    @Field({ nullable: true })
+    EvaluationCriteria?: string;
 }
     
 
@@ -118,6 +124,9 @@ export class UpdateSubmissionTypeInput {
 
     @Field({ nullable: true })
     Description?: string;
+
+    @Field({ nullable: true })
+    EvaluationCriteria?: string;
 
     @Field(() => [KeyValuePairInput], { nullable: true })
     OldValues___?: KeyValuePairInput[];

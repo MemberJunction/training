@@ -269,6 +269,11 @@ export const SubmissionTypeSchema = z.object({
         * * Display Name: Description
         * * SQL Data Type: nvarchar(MAX)
     * * Description: Description of the submission type.`),
+    EvaluationCriteria: z.string().nullish().describe(`
+        * * Field Name: EvaluationCriteria
+        * * Display Name: Evaluation Criteria
+        * * SQL Data Type: nvarchar(MAX)
+    * * Description: Optional, the criteria that should be used to evaluate how good a submission is.`),
     __mj_CreatedAt: z.date().describe(`
         * * Field Name: __mj_CreatedAt
         * * Display Name: Created At
@@ -1046,6 +1051,19 @@ export class SubmissionTypeEntity extends BaseEntity<SubmissionTypeEntityType> {
     }
     set Description(value: string | null) {
         this.Set('Description', value);
+    }
+
+    /**
+    * * Field Name: EvaluationCriteria
+    * * Display Name: Evaluation Criteria
+    * * SQL Data Type: nvarchar(MAX)
+    * * Description: Optional, the criteria that should be used to evaluate how good a submission is.
+    */
+    get EvaluationCriteria(): string | null {
+        return this.Get('EvaluationCriteria');
+    }
+    set EvaluationCriteria(value: string | null) {
+        this.Set('EvaluationCriteria', value);
     }
 
     /**

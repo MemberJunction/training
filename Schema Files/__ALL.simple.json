@@ -945,7 +945,7 @@
             "Name": "Submission Types",
             "Description": "Types of submissions, can be hierarchical using ParentID.",
             "BaseView": "vwSubmissionTypes", 
-            "Fields": ["ID","Name","ParentID","Type","SubmissionDeadline","Description","__mj_CreatedAt","__mj_UpdatedAt","Parent"]
+            "Fields": ["ID","Name","ParentID","Type","SubmissionDeadline","Description","EvaluationCriteria","__mj_CreatedAt","__mj_UpdatedAt","Parent"]
         },
         { 
             "Name": "Submissions",

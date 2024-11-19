@@ -330,6 +330,12 @@
                     "AllowsNull": true 
                 },         
                 {
+                    "Name": "EvaluationCriteria", 
+                    "Description": "Optional, the criteria that should be used to evaluate how good a submission is.",  
+                    "Type": "nvarchar",
+                    "AllowsNull": true 
+                },         
+                {
                     "Name": "__mj_CreatedAt", 
                     "Description": "",  
                     "Type": "datetimeoffset",

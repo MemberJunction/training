@@ -2051,6 +2051,7 @@ input CreateSubmissionRoleInput {
 
 input CreateSubmissionTypeInput {
   Description: String
+  EvaluationCriteria: String
   Name: String!
   ParentID: String
   SubmissionDeadline: Timestamp
@@ -7193,6 +7194,11 @@ type SubmissionRole_ {
 type SubmissionType_ {
   """Description of the submission type."""
   Description: String
+
+  """
+  Optional, the criteria that should be used to evaluate how good a submission is.
+  """
+  EvaluationCriteria: String
   ID: String!
 
   """Name of the submission type."""
@@ -8780,6 +8786,7 @@ input UpdateSubmissionRoleInput {
 
 input UpdateSubmissionTypeInput {
   Description: String
+  EvaluationCriteria: String
   ID: String!
   Name: String!
   OldValues___: [KeyValuePairInput!]
