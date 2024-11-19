@@ -14,7 +14,7 @@ export class HomeComponent implements OnInit {
   public title: string = environment.APP_TITLE
   public submissionTypes: SubmissionTypeEntity[] = [];
 
-  constructor(public sharedService: SharedService, public router: Router) {
+  constructor(private sharedService: SharedService, private router: Router) {
 
   }
 
@@ -36,5 +36,9 @@ export class HomeComponent implements OnInit {
         }
       });
     }
+  }
+
+  public goToLink(link: string) {
+    this.router.navigate([link]);
   }
 }

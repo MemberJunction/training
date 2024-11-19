@@ -3,6 +3,7 @@ import { RouterModule, Routes } from '@angular/router';
 import { HomeComponent } from './home/home.component';
 import { NoAccessComponent } from './no-access/no-access.component';
 import { NewSubmission } from './new-submission/new-submission.component';
+import { SubmissionsList } from './submissions-list/submissions-list.component';
 
 const routes: Routes = [
   { 
@@ -13,7 +14,10 @@ const routes: Routes = [
   { 
     path: 'new',
     component: NewSubmission,
-    data: { breadcrumb: 'new' }
+  },
+  { 
+    path: 'submissions-list',
+    component: SubmissionsList
   },
   { 
     path: 'no-access',

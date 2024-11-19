@@ -1,23 +1,4 @@
-<div class="home">
-    <div class="section-home" *ngIf="sharedService.LoggedIn">
-        <div>
-            @for (st of submissionTypes; track st) {
-                <div  >
-                    <div  >
-                        <h3>{{st.Name}}</h3>
-                    </div>
-                    <div  >
-                        <div  >
-                            <p>{{st.Description}}</p>
-                        </div>
-                        <div  >
-                            <a routerLink="submission-type/{{st.ID}}">Explore</a>
-                        </div>
-                    </div>
-                </div>
-            }
-        </div>
-    </div>
-
-    <a href="new">New Submission</a>    
+<div class="home">    
+    <div (click)="goToLink('new')">New Submission</div>    
+    <div (click)="goToLink('submissions-list')">Submissions List</div>    
 </div>

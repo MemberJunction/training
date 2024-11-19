@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Metadata } from '@memberjunction/core';
 import { SubmissionEntity } from 'mj_generatedentities';
 import { SharedService } from '../shared-service';
+import { Router } from '@angular/router';
 
 
 @Component({
@@ -12,9 +13,10 @@ import { SharedService } from '../shared-service';
 export class NewSubmission implements OnInit {
   public submission: SubmissionEntity;
 
-  constructor (private sharedService: SharedService) {
+  constructor (private sharedService: SharedService, private router: Router) {
 
   }
+
   async ngOnInit() {
     this.sharedService.setupComplete$.subscribe(async (complete: boolean) => {
       if (complete) {
@@ -27,7 +29,10 @@ export class NewSubmission implements OnInit {
   }
 
   public async onSave() {
-    if (!await this.submission.Save()) {
+    if (await this.submission.Save()) {
+      this.router.navigate(['submissions-list']);
+    }
+    else {
       alert (this.submission.LatestResult.Message);
     }
   }
