@@ -1,0 +1,85 @@
+{
+	"version": "2.0.0",
+	"tasks": [
+		{
+			"type": "typescript",
+			"tsconfig": "BaseEntities/tsconfig.json",
+			"problemMatcher": [
+				"$tsc"
+			],
+			"group": "build",
+			"label": "tsc: build - tsconfig.json"
+		},
+		{
+			"type": "typescript",
+			"tsconfig": "GeneratedEntities/tsconfig.json",
+			"problemMatcher": [
+				"$tsc"
+			],
+			"group": "build",
+			"label": "tsc: build - tsconfig.json"
+		},
+		{
+			"label": "start MJExplorer",
+			"type": "npm",
+			"script": "start",
+			"path": "MJExplorer",
+			"isBackground": true,
+			"presentation": {
+			  "focus": true,
+			  "panel": "dedicated"
+			},
+			"group": {
+			  "kind": "build",
+			  "isDefault": true
+			},
+			"problemMatcher": {
+			  "owner": "typescript",
+			  "source": "ts",
+			  "applyTo": "closedDocuments",
+			  "fileLocation": ["relative", "${cwd}"],
+			  "pattern": "$tsc",
+			  "background": {
+				"activeOnStart": true,
+				"beginsPattern": {
+				  "regexp": "(.*?)"
+				},
+				"endsPattern": {
+				  "regexp": "Compiled |Failed to compile."
+				}
+  	  		  }
+			}
+		},
+		{
+			"label": "start Portal",
+			"type": "npm",
+			"script": "start",
+			"path": "abstracts/Portal",
+			"isBackground": true,
+			"presentation": {
+			  "focus": true,
+			  "panel": "dedicated"
+			},
+			"group": {
+			  "kind": "build",
+			  "isDefault": true
+			},
+			"problemMatcher": {
+			  "owner": "typescript",
+			  "source": "ts",
+			  "applyTo": "closedDocuments",
+			  "fileLocation": ["relative", "${cwd}"],
+			  "pattern": "$tsc",
+			  "background": {
+				"activeOnStart": true,
+				"beginsPattern": {
+				  "regexp": "(.*?)"
+				},
+				"endsPattern": {
+				  "regexp": "Application bundle generation complete.|Failed to compile."
+				}
+  	  		  }
+			}
+		}
+	]
+}

@@ -1,0 +1,60 @@
+{
+    "version": "0.2.0",
+    "configurations": [
+      {
+        "type": "node",
+        "request": "launch",
+        "name": "MJAPI",
+        "envFile": "${workspaceFolder}/MJAPI/.env",
+        "cwd": "${workspaceFolder}/MJAPI",
+        "runtimeExecutable": "npm",
+        "runtimeArgs": ["start"],
+        "skipFiles": ["${workspaceFolder}/MJAPI/node_modules/**/*.js", "<node_internals>/**"]
+      },
+      {
+        "type": "chrome",
+        "request": "launch",
+        "preLaunchTask": "start MJExplorer",
+        "name": "MJExplorer",
+        "url": "http://localhost:4200",
+        "cwd": "${workspaceFolder}/MJExplorer",
+        "sourceMaps": true,
+        "webRoot": "${workspaceFolder}",
+        "sourceMapPathOverrides": {
+          "webpack:///./src/*": "${workspaceFolder}/MJExplorer/src/*"
+        }
+      },
+      {
+        "type": "chrome",
+        "request": "launch",
+        "preLaunchTask": "start Portal",
+        "name": "Portal",
+        "url": "http://localhost:4200",
+        "cwd": "${workspaceFolder}/abstracts/Portal",
+        "sourceMaps": true,
+        "webRoot": "${workspaceFolder}/abstracts/Portal",
+        "sourceMapPathOverrides": {
+          "webpack:///./src/*": "${workspaceFolder}/abstracts/Portal/src/*"
+        }
+      },
+      {
+        "type": "node",
+        "request": "launch",
+        "name": "CodeGen",
+        "envFile": "${workspaceFolder}/CodeGen/.env",
+        "cwd": "${workspaceFolder}/CodeGen",
+        "runtimeExecutable": "npm",
+        "runtimeArgs": ["start"],
+        "skipFiles": ["${workspaceFolder}/node_modules/**/*.js", "<node_internals>/**"]
+      },
+      {
+        "type": "chrome",
+        "request": "launch",
+        "name": "Launch Chrome against localhost",
+        "url": "http://localhost:4200",
+        "webRoot": "${workspaceFolder}/packages/MJExplorer",
+        "sourceMaps": true
+      }
+    ]
+  }
+  

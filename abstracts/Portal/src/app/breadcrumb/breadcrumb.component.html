@@ -1,0 +1,22 @@
+<div class="breadcrumbWrapper">
+    <div class="container-large">
+      <div class="breadcrumb">
+        <ng-container *ngFor="let breadcrumb of (breadcrumbs$ | async); let last = last">
+          <a *ngIf="!last" [routerLink]="breadcrumb.url">{{ breadcrumb.label }}</a>
+          <span *ngIf="!last"> <kendo-icon name="arrow-chevron-right"></kendo-icon> </span>
+          <span *ngIf="last">{{ breadcrumb.label }}</span>
+        </ng-container>
+      </div>
+      <div class="back-sec">
+        <a routerLink="/">
+          <kendo-icon name="arrow-chevron-left"></kendo-icon>
+          Back
+        </a>
+      </div>
+    </div>
+  </div>
+  <!-- <ul>
+    <li *ngFor="let breadcrumb of (breadcrumbs$ | async)">
+      <a [href]="breadcrumb.url">{{ breadcrumb.label }}</a>
+    </li>
+  </ul> -->

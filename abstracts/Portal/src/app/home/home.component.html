@@ -1,0 +1,24 @@
+<div class="home">
+    <div class="section-home" *ngIf="sharedService.LoggedIn">
+        <div class="header-banner">
+            <h2>Please select from one of the following</h2>
+        </div>
+        <div>
+            @for (st of submissionTypes; track st) {
+                <div class="publisher-card">
+                    <div class="publisher-card-header">
+                        <h3>{{st.Name}}</h3>
+                    </div>
+                    <div class="publisher-card-body">
+                        <div class="publisher-card-body-left">
+                            <p>{{st.Description}}</p>
+                        </div>
+                        <div class="publisher-card-body-right">
+                            <a routerLink="publisher/{{st.ID}}">Explore</a>
+                        </div>
+                    </div>
+                </div>
+            }
+        </div>
+    </div>
+</div>

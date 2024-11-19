@@ -1,0 +1,47 @@
+{
+        "schemaName": "abstracts", 
+        "entities": [
+        { 
+            "Name": "Persons",
+            "Description": "Table to store information about individuals.",
+            "BaseView": "vwPersons", 
+            "Fields": ["ID","FirstName","LastName","Email","__mj_CreatedAt","__mj_UpdatedAt"]
+        },
+        { 
+            "Name": "Reviewer Roles",
+            "Description": "Roles associated with reviewer assignments.",
+            "BaseView": "vwReviewerRoles", 
+            "Fields": ["ID","Name","SubmissionTypeID","Description","__mj_CreatedAt","__mj_UpdatedAt","SubmissionType"]
+        },
+        { 
+            "Name": "Reviews",
+            "Description": "Table for storing reviews of submissions.",
+            "BaseView": "vwReviews", 
+            "Fields": ["ID","AssignedAt","SubmissionID","ReviewerID","RoleID","Score","Status","ReviewedAt","Comments","__mj_UpdatedAt","__mj_CreatedAt","Role"]
+        },
+        { 
+            "Name": "Submission Persons",
+            "Description": "",
+            "BaseView": "vwSubmissionPersons", 
+            "Fields": ["ID","SubmissionID","PersonID","RoleID","__mj_CreatedAt","__mj_UpdatedAt","Role"]
+        },
+        { 
+            "Name": "Submission Roles",
+            "Description": "Roles associated with submission-person relationships.",
+            "BaseView": "vwSubmissionRoles", 
+            "Fields": ["ID","Name","SubmissionTypeID","Description","__mj_CreatedAt","__mj_UpdatedAt","SubmissionType"]
+        },
+        { 
+            "Name": "Submission Types",
+            "Description": "Types of submissions, can be hierarchical using ParentID.",
+            "BaseView": "vwSubmissionTypes", 
+            "Fields": ["ID","Name","ParentID","Type","SubmissionDeadline","Description","__mj_CreatedAt","__mj_UpdatedAt","Parent"]
+        },
+        { 
+            "Name": "Submissions",
+            "Description": "Table to store submission details.",
+            "BaseView": "vwSubmissions", 
+            "Fields": ["ID","SubmittedAt","Title","Description","Contents","SubmissionTypeID","Status","__mj_UpdatedAt","__mj_CreatedAt","SubmissionType"]
+        }
+        ]
+    }

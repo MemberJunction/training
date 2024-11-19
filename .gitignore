@@ -1,0 +1,16 @@
+CodeGen/.env
+CodeGen/node_modules/**
+MJAPI/.env
+MJAPI/node_modules/**
+MJExplorer/node_modules/**
+MJExplorer/.angular/**  
+GeneratedEntities/node_modules/**
+GeneratedEntities/dist/**
+GeneratedActions/node_modules/**
+GeneratedActions/dist/**
+abstracts/Portal/node_modules/**
+abstracts/Portal/.angular/**
+CodeGen/codegen.output.txt
+.mjrc.yml
+install.config.json
+MemberJunction_Code_Bootstrap.zip
