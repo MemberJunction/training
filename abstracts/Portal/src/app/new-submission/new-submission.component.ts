@@ -20,6 +20,8 @@ export class NewSubmission implements OnInit {
       if (complete) {
         const md = new Metadata();
         this.submission = await md.GetEntityObject<SubmissionEntity>('Submissions');    
+        this.submission.SubmissionTypeID =  "5DA65B3A-EC1B-40C9-B727-718541CC2DFE";
+        this.submission.Status = "Pending";
       }
     });
   }
