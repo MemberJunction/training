@@ -1,7 +1,18 @@
+### Node ###
+# Logs
+logs
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+lerna-debug.log*
+.pnpm-debug.log*
+
 CodeGen/.env
 CodeGen/node_modules/**
 MJAPI/.env
 MJAPI/node_modules/**
+MJAPI/dist/**
 MJExplorer/node_modules/**
 MJExplorer/.angular/**  
 CustomServerEntities/node_modules/**
@@ -12,7 +23,14 @@ GeneratedActions/node_modules/**
 GeneratedActions/dist/**
 abstracts/Portal/node_modules/**
 abstracts/Portal/.angular/**
+abstracts/Portal/dist/**
 CodeGen/codegen.output.txt
 .mjrc.yml
 install.config.json
 MemberJunction_Code_Bootstrap.zip
+
+# TypeScript cache
+*.tsbuildinfo
+
+# Temporary files
+tmp/
