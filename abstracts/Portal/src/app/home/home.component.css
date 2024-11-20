@@ -107,3 +107,8 @@
         font-size: 20px;
     }
 }
+
+.margin-top-small {
+    margin-top: 10px;
+    cursor: pointer;
+}

@@ -28,6 +28,10 @@ CodeGen/codegen.output.txt
 .mjrc.yml
 install.config.json
 MemberJunction_Code_Bootstrap.zip
+Angular Elements/.angular/*
+Angular Elements/dist/*
+Angular Elements/node_modules/*
+
 
 # TypeScript cache
 *.tsbuildinfo

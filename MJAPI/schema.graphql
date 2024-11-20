@@ -1691,6 +1691,10 @@ input CreateExplorerNavigationItemInput {
   ShowInNavigationDrawer: Boolean!
 }
 
+input CreateFieldOfStudyInput {
+  NameOfField: String!
+}
+
 input CreateFileCategoryInput {
   Description: String
   Name: String!
@@ -1767,10 +1771,20 @@ input CreateListInput {
   UserID: String!
 }
 
+input CreateOrganizationInput {
+  Name: String!
+}
+
+input CreateOrganizationRoleInput {
+  RoleName: String!
+}
+
 input CreatePersonInput {
   Email: String!
   FirstName: String!
   LastName: String!
+  OrganizationID: Int
+  OrganizationRoleID: Int
 }
 
 input CreateQueryCategoryInput {
@@ -2031,6 +2045,7 @@ input CreateSchemaInfoInput {
 input CreateSubmissionInput {
   Contents: String
   Description: String
+  FieldOfStudyID: Int!
   Status: String!
   SubmissionTypeID: String!
   SubmittedAt: Timestamp!
@@ -3284,6 +3299,17 @@ type FieldMappingOutput {
   Value: String!
 }
 
+"""Table to store fields of study."""
+type FieldOfStudy_ {
+  """Primary key identifier for the field of study."""
+  ID: Int!
+
+  """The name of the field of study."""
+  NameOfField: String!
+  _mj__CreatedAt: Timestamp!
+  _mj__UpdatedAt: Timestamp!
+}
+
 type FileCategory_ {
   Description: String
   FileCategories_ParentIDArray: [FileCategory_!]!
@@ -3567,6 +3593,7 @@ type Mutation {
   CreateEntitySetting(input: CreateEntitySettingInput!): EntitySetting_!
   CreateErrorLog(input: CreateErrorLogInput!): ErrorLog_!
   CreateExplorerNavigationItem(input: CreateExplorerNavigationItemInput!): ExplorerNavigationItem_!
+  CreateFieldOfStudy(input: CreateFieldOfStudyInput!): FieldOfStudy_!
   CreateFile(input: CreateFileInput!): CreateFilePayload!
   CreateFileCategory(input: CreateFileCategoryInput!): FileCategory_!
   CreateFileEntityRecordLink(input: CreateFileEntityRecordLinkInput!): FileEntityRecordLink_!
@@ -3576,6 +3603,8 @@ type Mutation {
   CreateList(input: CreateListInput!): List_!
   CreateListCategory(input: CreateListCategoryInput!): ListCategory_!
   CreateListDetail(input: CreateListDetailInput!): ListDetail_!
+  CreateOrganization(input: CreateOrganizationInput!): Organization_!
+  CreateOrganizationRole(input: CreateOrganizationRoleInput!): OrganizationRole_!
   CreatePerson(input: CreatePersonInput!): Person_!
   CreateQuery(input: CreateQueryInput!): Query_!
   CreateQueryCategory(input: CreateQueryCategoryInput!): QueryCategory_!
@@ -3680,10 +3709,13 @@ type Mutation {
   DeleteEntityPermission(ID: String!, options___: DeleteOptionsInput!): EntityPermission_!
   DeleteEntityRelationship(ID: String!, options___: DeleteOptionsInput!): EntityRelationship_!
   DeleteExplorerNavigationItem(ID: String!, options___: DeleteOptionsInput!): ExplorerNavigationItem_!
+  DeleteFieldOfStudy(ID: Int!, options___: DeleteOptionsInput!): FieldOfStudy_!
   DeleteFile(ID: String!, options___: DeleteOptionsInput!): File_!
   DeleteFileCategory(ID: String!, options___: DeleteOptionsInput!): FileCategory_!
   DeleteList(ID: String!, options___: DeleteOptionsInput!): List_!
   DeleteListDetail(ID: String!, options___: DeleteOptionsInput!): ListDetail_!
+  DeleteOrganization(ID: Int!, options___: DeleteOptionsInput!): Organization_!
+  DeleteOrganizationRole(ID: Int!, options___: DeleteOptionsInput!): OrganizationRole_!
   DeletePerson(ID: Int!, options___: DeleteOptionsInput!): Person_!
   DeleteQueryCategory(ID: String!, options___: DeleteOptionsInput!): QueryCategory_!
   DeleteReport(ID: String!, options___: DeleteOptionsInput!): Report_!
@@ -3792,6 +3824,7 @@ type Mutation {
   UpdateEntitySetting(input: UpdateEntitySettingInput!): EntitySetting_!
   UpdateErrorLog(input: UpdateErrorLogInput!): ErrorLog_!
   UpdateExplorerNavigationItem(input: UpdateExplorerNavigationItemInput!): ExplorerNavigationItem_!
+  UpdateFieldOfStudy(input: UpdateFieldOfStudyInput!): FieldOfStudy_!
   UpdateFile(input: UpdateFileInput!): File_!
   UpdateFileCategory(input: UpdateFileCategoryInput!): FileCategory_!
   UpdateFileEntityRecordLink(input: UpdateFileEntityRecordLinkInput!): FileEntityRecordLink_!
@@ -3803,6 +3836,8 @@ type Mutation {
   UpdateList(input: UpdateListInput!): List_!
   UpdateListCategory(input: UpdateListCategoryInput!): ListCategory_!
   UpdateListDetail(input: UpdateListDetailInput!): ListDetail_!
+  UpdateOrganization(input: UpdateOrganizationInput!): Organization_!
+  UpdateOrganizationRole(input: UpdateOrganizationRoleInput!): OrganizationRole_!
   UpdatePerson(input: UpdatePersonInput!): Person_!
   UpdateQuery(input: UpdateQueryInput!): Query_!
   UpdateQueryCategory(input: UpdateQueryCategoryInput!): QueryCategory_!
@@ -3859,6 +3894,30 @@ type Mutation {
   Updateflyway_schema_history(input: Updateflyway_schema_historyInput!): flyway_schema_history_!
 }
 
+"""Table to store roles within an organization."""
+type OrganizationRole_ {
+  """Primary key identifier for the organization role."""
+  ID: Int!
+  Persons_OrganizationRoleIDArray: [Person_!]!
+
+  """Name of the role in the organization."""
+  RoleName: String!
+  _mj__CreatedAt: Timestamp!
+  _mj__UpdatedAt: Timestamp!
+}
+
+"""Table to store organization information."""
+type Organization_ {
+  """Primary key identifier for the organization."""
+  ID: Int!
+
+  """Name of the organization."""
+  Name: String!
+  Persons_OrganizationIDArray: [Person_!]!
+  _mj__CreatedAt: Timestamp!
+  _mj__UpdatedAt: Timestamp!
+}
+
 type OutputDeliveryType_ {
   Description: String
   ID: String!
@@ -3893,6 +3952,9 @@ type Person_ {
   FirstName: String!
   ID: Int!
   LastName: String!
+  Organization: String
+  OrganizationID: Int
+  OrganizationRoleID: Int
   Reviews_ReviewerIDArray: [Review_!]!
   SubmissionPersons_PersonIDArray: [SubmissionPerson_!]!
   _mj__CreatedAt: Timestamp!
@@ -4048,6 +4110,7 @@ type Query {
   ExecuteAskSkipRecordChat(CompositeKey: CompositeKeyInputType!, ConversationId: String!, EntityName: String!, UserQuestion: String!): AskSkipResultType!
   ExecuteAskSkipRunScript(DataContextId: String!, ScriptText: String!): AskSkipResultType!
   ExplorerNavigationItem(ID: String!): ExplorerNavigationItem_
+  FieldOfStudy(ID: Int!): FieldOfStudy_
   File(ID: String!): File_
   FileCategory(ID: String!): FileCategory_
   FileEntityRecordLink(ID: String!): FileEntityRecordLink_
@@ -4069,6 +4132,8 @@ type Query {
   List(ID: String!): List_
   ListCategory(ID: String!): ListCategory_
   ListDetail(ID: String!): ListDetail_
+  Organization(ID: Int!): Organization_
+  OrganizationRole(ID: Int!): OrganizationRole_
   OutputDeliveryType(ID: String!): OutputDeliveryType_
   OutputFormatType(ID: String!): OutputFormatType_
   OutputTriggerType(ID: String!): OutputTriggerType_
@@ -4352,6 +4417,9 @@ type Query {
   RunExplorerNavigationItemDynamicView(input: RunDynamicViewInput!): RunExplorerNavigationItemViewResult!
   RunExplorerNavigationItemViewByID(input: RunViewByIDInput!): RunExplorerNavigationItemViewResult!
   RunExplorerNavigationItemViewByName(input: RunViewByNameInput!): RunExplorerNavigationItemViewResult!
+  RunFieldOfStudyDynamicView(input: RunDynamicViewInput!): RunFieldOfStudyViewResult!
+  RunFieldOfStudyViewByID(input: RunViewByIDInput!): RunFieldOfStudyViewResult!
+  RunFieldOfStudyViewByName(input: RunViewByNameInput!): RunFieldOfStudyViewResult!
   RunFileCategoryDynamicView(input: RunDynamicViewInput!): RunFileCategoryViewResult!
   RunFileCategoryViewByID(input: RunViewByIDInput!): RunFileCategoryViewResult!
   RunFileCategoryViewByName(input: RunViewByNameInput!): RunFileCategoryViewResult!
@@ -4385,6 +4453,12 @@ type Query {
   RunListDynamicView(input: RunDynamicViewInput!): RunListViewResult!
   RunListViewByID(input: RunViewByIDInput!): RunListViewResult!
   RunListViewByName(input: RunViewByNameInput!): RunListViewResult!
+  RunOrganizationDynamicView(input: RunDynamicViewInput!): RunOrganizationViewResult!
+  RunOrganizationRoleDynamicView(input: RunDynamicViewInput!): RunOrganizationRoleViewResult!
+  RunOrganizationRoleViewByID(input: RunViewByIDInput!): RunOrganizationRoleViewResult!
+  RunOrganizationRoleViewByName(input: RunViewByNameInput!): RunOrganizationRoleViewResult!
+  RunOrganizationViewByID(input: RunViewByIDInput!): RunOrganizationViewResult!
+  RunOrganizationViewByName(input: RunViewByNameInput!): RunOrganizationViewResult!
   RunOutputDeliveryTypeDynamicView(input: RunDynamicViewInput!): RunOutputDeliveryTypeViewResult!
   RunOutputDeliveryTypeViewByID(input: RunViewByIDInput!): RunOutputDeliveryTypeViewResult!
   RunOutputDeliveryTypeViewByName(input: RunViewByNameInput!): RunOutputDeliveryTypeViewResult!
@@ -6071,6 +6145,16 @@ type RunExplorerNavigationItemViewResult {
   UserViewRunID: String
 }
 
+type RunFieldOfStudyViewResult {
+  ErrorMessage: String
+  ExecutionTime: Int
+  Results: [FieldOfStudy_!]!
+  RowCount: Int
+  Success: Boolean!
+  TotalRowCount: Int
+  UserViewRunID: String
+}
+
 type RunFileCategoryViewResult {
   ErrorMessage: String
   ExecutionTime: Int
@@ -6175,6 +6259,26 @@ type RunListViewResult {
   ErrorMessage: String
   ExecutionTime: Int
   Results: [List_!]!
+  RowCount: Int
+  Success: Boolean!
+  TotalRowCount: Int
+  UserViewRunID: String
+}
+
+type RunOrganizationRoleViewResult {
+  ErrorMessage: String
+  ExecutionTime: Int
+  Results: [OrganizationRole_!]!
+  RowCount: Int
+  Success: Boolean!
+  TotalRowCount: Int
+  UserViewRunID: String
+}
+
+type RunOrganizationViewResult {
+  ErrorMessage: String
+  ExecutionTime: Int
+  Results: [Organization_!]!
   RowCount: Int
   Success: Boolean!
   TotalRowCount: Int
@@ -7221,6 +7325,7 @@ type SubmissionType_ {
 type Submission_ {
   Contents: String
   Description: String
+  FieldOfStudyID: Int!
   ID: Int!
   Reviews_SubmissionIDArray: [Review_!]!
   Status: String!
@@ -8342,6 +8447,12 @@ input UpdateExplorerNavigationItemInput {
   ShowInNavigationDrawer: Boolean!
 }
 
+input UpdateFieldOfStudyInput {
+  ID: Int!
+  NameOfField: String!
+  OldValues___: [KeyValuePairInput!]
+}
+
 input UpdateFileCategoryInput {
   Description: String
   ID: String!
@@ -8451,12 +8562,26 @@ input UpdateListInput {
   UserID: String!
 }
 
+input UpdateOrganizationInput {
+  ID: Int!
+  Name: String!
+  OldValues___: [KeyValuePairInput!]
+}
+
+input UpdateOrganizationRoleInput {
+  ID: Int!
+  OldValues___: [KeyValuePairInput!]
+  RoleName: String!
+}
+
 input UpdatePersonInput {
   Email: String!
   FirstName: String!
   ID: Int!
   LastName: String!
   OldValues___: [KeyValuePairInput!]
+  OrganizationID: Int
+  OrganizationRoleID: Int
 }
 
 input UpdateQueryCategoryInput {
@@ -8760,6 +8885,7 @@ input UpdateSchemaInfoInput {
 input UpdateSubmissionInput {
   Contents: String
   Description: String
+  FieldOfStudyID: Int!
   ID: Int!
   OldValues___: [KeyValuePairInput!]
   Status: String!
