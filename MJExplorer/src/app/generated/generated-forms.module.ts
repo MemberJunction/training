@@ -26,6 +26,9 @@ import { ComboBoxModule } from '@progress/kendo-angular-dropdowns';
 import { DropDownListModule } from '@progress/kendo-angular-dropdowns';
 
 // Import Generated Components
+import { FieldOfStudyFormComponent, LoadFieldOfStudyFormComponent } from "./Entities/FieldOfStudy/fieldofstudy.form.component";
+import { OrganizationRoleFormComponent, LoadOrganizationRoleFormComponent } from "./Entities/OrganizationRole/organizationrole.form.component";
+import { OrganizationFormComponent, LoadOrganizationFormComponent } from "./Entities/Organization/organization.form.component";
 import { PersonFormComponent, LoadPersonFormComponent } from "./Entities/Person/person.form.component";
 import { ReviewerRoleFormComponent, LoadReviewerRoleFormComponent } from "./Entities/ReviewerRole/reviewerrole.form.component";
 import { ReviewFormComponent, LoadReviewFormComponent } from "./Entities/Review/review.form.component";
@@ -33,6 +36,9 @@ import { SubmissionPersonFormComponent, LoadSubmissionPersonFormComponent } from
 import { SubmissionRoleFormComponent, LoadSubmissionRoleFormComponent } from "./Entities/SubmissionRole/submissionrole.form.component";
 import { SubmissionTypeFormComponent, LoadSubmissionTypeFormComponent } from "./Entities/SubmissionType/submissiontype.form.component";
 import { SubmissionFormComponent, LoadSubmissionFormComponent } from "./Entities/Submission/submission.form.component";
+import { FieldOfStudyDetailsComponent, LoadFieldOfStudyDetailsComponent } from "./Entities/FieldOfStudy/sections/details.component"
+import { OrganizationRoleDetailsComponent, LoadOrganizationRoleDetailsComponent } from "./Entities/OrganizationRole/sections/details.component"
+import { OrganizationDetailsComponent, LoadOrganizationDetailsComponent } from "./Entities/Organization/sections/details.component"
 import { PersonDetailsComponent, LoadPersonDetailsComponent } from "./Entities/Person/sections/details.component"
 import { ReviewerRoleDetailsComponent, LoadReviewerRoleDetailsComponent } from "./Entities/ReviewerRole/sections/details.component"
 import { ReviewDetailsComponent, LoadReviewDetailsComponent } from "./Entities/Review/sections/details.component"
@@ -44,6 +50,9 @@ import { SubmissionDetailsComponent, LoadSubmissionDetailsComponent } from "./En
 
 @NgModule({
 declarations: [
+    FieldOfStudyFormComponent,
+    OrganizationRoleFormComponent,
+    OrganizationFormComponent,
     PersonFormComponent,
     ReviewerRoleFormComponent,
     ReviewFormComponent,
@@ -51,6 +60,9 @@ declarations: [
     SubmissionRoleFormComponent,
     SubmissionTypeFormComponent,
     SubmissionFormComponent,
+    FieldOfStudyDetailsComponent,
+    OrganizationRoleDetailsComponent,
+    OrganizationDetailsComponent,
     PersonDetailsComponent,
     ReviewerRoleDetailsComponent,
     ReviewDetailsComponent,
@@ -97,6 +109,9 @@ export function LoadGeneratedForms() {
     // code do NOTHING - the point is to prevent the code from being eliminated during tree shaking
     // since it is dynamically instantiated on demand, and the Angular compiler has no way to know that,
     // in production builds tree shaking will eliminate the code unless we do this
+    LoadFieldOfStudyFormComponent();
+    LoadOrganizationRoleFormComponent();
+    LoadOrganizationFormComponent();
     LoadPersonFormComponent();
     LoadReviewerRoleFormComponent();
     LoadReviewFormComponent();
@@ -104,6 +119,9 @@ export function LoadGeneratedForms() {
     LoadSubmissionRoleFormComponent();
     LoadSubmissionTypeFormComponent();
     LoadSubmissionFormComponent();
+    LoadFieldOfStudyDetailsComponent();
+    LoadOrganizationRoleDetailsComponent();
+    LoadOrganizationDetailsComponent();
     LoadPersonDetailsComponent();
     LoadReviewerRoleDetailsComponent();
     LoadReviewDetailsComponent();

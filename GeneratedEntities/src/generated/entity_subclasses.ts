@@ -9,6 +9,90 @@ export const loadModule = () => {
      
  
 /**
+ * zod schema definition for the entity Field Of Studies
+ */
+export const FieldOfStudySchema = z.object({
+    ID: z.number().describe(`
+        * * Field Name: ID
+        * * Display Name: ID
+        * * SQL Data Type: int
+    * * Description: Primary key identifier for the field of study.`),
+    NameOfField: z.string().describe(`
+        * * Field Name: NameOfField
+        * * Display Name: Name Of Field
+        * * SQL Data Type: nvarchar(255)
+    * * Description: The name of the field of study.`),
+    __mj_CreatedAt: z.date().describe(`
+        * * Field Name: __mj_CreatedAt
+        * * Display Name: Created At
+        * * SQL Data Type: datetimeoffset
+        * * Default Value: getutcdate()`),
+    __mj_UpdatedAt: z.date().describe(`
+        * * Field Name: __mj_UpdatedAt
+        * * Display Name: Updated At
+        * * SQL Data Type: datetimeoffset
+        * * Default Value: getutcdate()`),
+});
+
+export type FieldOfStudyEntityType = z.infer<typeof FieldOfStudySchema>;
+
+/**
+ * zod schema definition for the entity Organization Roles
+ */
+export const OrganizationRoleSchema = z.object({
+    ID: z.number().describe(`
+        * * Field Name: ID
+        * * Display Name: ID
+        * * SQL Data Type: int
+    * * Description: Primary key identifier for the organization role.`),
+    RoleName: z.string().describe(`
+        * * Field Name: RoleName
+        * * Display Name: Role Name
+        * * SQL Data Type: nvarchar(255)
+    * * Description: Name of the role in the organization.`),
+    __mj_CreatedAt: z.date().describe(`
+        * * Field Name: __mj_CreatedAt
+        * * Display Name: Created At
+        * * SQL Data Type: datetimeoffset
+        * * Default Value: getutcdate()`),
+    __mj_UpdatedAt: z.date().describe(`
+        * * Field Name: __mj_UpdatedAt
+        * * Display Name: Updated At
+        * * SQL Data Type: datetimeoffset
+        * * Default Value: getutcdate()`),
+});
+
+export type OrganizationRoleEntityType = z.infer<typeof OrganizationRoleSchema>;
+
+/**
+ * zod schema definition for the entity Organizations
+ */
+export const OrganizationSchema = z.object({
+    ID: z.number().describe(`
+        * * Field Name: ID
+        * * Display Name: ID
+        * * SQL Data Type: int
+    * * Description: Primary key identifier for the organization.`),
+    Name: z.string().describe(`
+        * * Field Name: Name
+        * * Display Name: Name
+        * * SQL Data Type: nvarchar(255)
+    * * Description: Name of the organization.`),
+    __mj_CreatedAt: z.date().describe(`
+        * * Field Name: __mj_CreatedAt
+        * * Display Name: Created At
+        * * SQL Data Type: datetimeoffset
+        * * Default Value: getutcdate()`),
+    __mj_UpdatedAt: z.date().describe(`
+        * * Field Name: __mj_UpdatedAt
+        * * Display Name: Updated At
+        * * SQL Data Type: datetimeoffset
+        * * Default Value: getutcdate()`),
+});
+
+export type OrganizationEntityType = z.infer<typeof OrganizationSchema>;
+
+/**
  * zod schema definition for the entity Persons
  */
 export const PersonSchema = z.object({
@@ -38,6 +122,20 @@ export const PersonSchema = z.object({
         * * Display Name: Updated At
         * * SQL Data Type: datetimeoffset
         * * Default Value: getutcdate()`),
+    OrganizationID: z.number().nullish().describe(`
+        * * Field Name: OrganizationID
+        * * Display Name: Organization ID
+        * * SQL Data Type: int
+        * * Related Entity/Foreign Key: Organizations (vwOrganizations.ID)`),
+    OrganizationRoleID: z.number().nullish().describe(`
+        * * Field Name: OrganizationRoleID
+        * * Display Name: Organization Role ID
+        * * SQL Data Type: int
+        * * Related Entity/Foreign Key: Organization Roles (vwOrganizationRoles.ID)`),
+    Organization: z.string().nullish().describe(`
+        * * Field Name: Organization
+        * * Display Name: Organization
+        * * SQL Data Type: nvarchar(255)`),
 });
 
 export type PersonEntityType = z.infer<typeof PersonSchema>;
@@ -323,6 +421,10 @@ export const SubmissionSchema = z.object({
         * * Display Name: Submission Type ID
         * * SQL Data Type: uniqueidentifier
         * * Related Entity/Foreign Key: Submission Types (vwSubmissionTypes.ID)`),
+    FieldOfStudyID: z.number().describe(`
+        * * Field Name: FieldOfStudyID
+        * * Display Name: Field Of Study ID
+        * * SQL Data Type: int`),
     Status: z.string().describe(`
         * * Field Name: Status
         * * Display Name: Status
@@ -346,6 +448,231 @@ export const SubmissionSchema = z.object({
 export type SubmissionEntityType = z.infer<typeof SubmissionSchema>;
  
  
+
+/**
+ * Field Of Studies - strongly typed entity sub-class
+ * * Schema: abstracts
+ * * Base Table: FieldOfStudy
+ * * Base View: vwFieldOfStudies
+ * * @description Table to store fields of study.
+ * * Primary Key: ID
+ * @extends {BaseEntity}
+ * @class
+ * @public
+ */
+@RegisterClass(BaseEntity, 'Field Of Studies')
+export class FieldOfStudyEntity extends BaseEntity<FieldOfStudyEntityType> {
+    /**
+    * Loads the Field Of Studies record from the database
+    * @param ID: number - primary key value to load the Field Of Studies record.
+    * @param EntityRelationshipsToLoad - (optional) the relationships to load
+    * @returns {Promise<boolean>} - true if successful, false otherwise
+    * @public
+    * @async
+    * @memberof FieldOfStudyEntity
+    * @method
+    * @override
+    */
+    public async Load(ID: number, EntityRelationshipsToLoad?: string[]) : Promise<boolean> {
+        const compositeKey: CompositeKey = new CompositeKey();
+        compositeKey.KeyValuePairs.push({ FieldName: 'ID', Value: ID });
+        return await super.InnerLoad(compositeKey, EntityRelationshipsToLoad);
+    }
+
+    /**
+    * * Field Name: ID
+    * * Display Name: ID
+    * * SQL Data Type: int
+    * * Description: Primary key identifier for the field of study.
+    */
+    get ID(): number {
+        return this.Get('ID');
+    }
+
+    /**
+    * * Field Name: NameOfField
+    * * Display Name: Name Of Field
+    * * SQL Data Type: nvarchar(255)
+    * * Description: The name of the field of study.
+    */
+    get NameOfField(): string {
+        return this.Get('NameOfField');
+    }
+    set NameOfField(value: string) {
+        this.Set('NameOfField', value);
+    }
+
+    /**
+    * * Field Name: __mj_CreatedAt
+    * * Display Name: Created At
+    * * SQL Data Type: datetimeoffset
+    * * Default Value: getutcdate()
+    */
+    get __mj_CreatedAt(): Date {
+        return this.Get('__mj_CreatedAt');
+    }
+
+    /**
+    * * Field Name: __mj_UpdatedAt
+    * * Display Name: Updated At
+    * * SQL Data Type: datetimeoffset
+    * * Default Value: getutcdate()
+    */
+    get __mj_UpdatedAt(): Date {
+        return this.Get('__mj_UpdatedAt');
+    }
+}
+
+
+/**
+ * Organization Roles - strongly typed entity sub-class
+ * * Schema: abstracts
+ * * Base Table: OrganizationRole
+ * * Base View: vwOrganizationRoles
+ * * @description Table to store roles within an organization.
+ * * Primary Key: ID
+ * @extends {BaseEntity}
+ * @class
+ * @public
+ */
+@RegisterClass(BaseEntity, 'Organization Roles')
+export class OrganizationRoleEntity extends BaseEntity<OrganizationRoleEntityType> {
+    /**
+    * Loads the Organization Roles record from the database
+    * @param ID: number - primary key value to load the Organization Roles record.
+    * @param EntityRelationshipsToLoad - (optional) the relationships to load
+    * @returns {Promise<boolean>} - true if successful, false otherwise
+    * @public
+    * @async
+    * @memberof OrganizationRoleEntity
+    * @method
+    * @override
+    */
+    public async Load(ID: number, EntityRelationshipsToLoad?: string[]) : Promise<boolean> {
+        const compositeKey: CompositeKey = new CompositeKey();
+        compositeKey.KeyValuePairs.push({ FieldName: 'ID', Value: ID });
+        return await super.InnerLoad(compositeKey, EntityRelationshipsToLoad);
+    }
+
+    /**
+    * * Field Name: ID
+    * * Display Name: ID
+    * * SQL Data Type: int
+    * * Description: Primary key identifier for the organization role.
+    */
+    get ID(): number {
+        return this.Get('ID');
+    }
+
+    /**
+    * * Field Name: RoleName
+    * * Display Name: Role Name
+    * * SQL Data Type: nvarchar(255)
+    * * Description: Name of the role in the organization.
+    */
+    get RoleName(): string {
+        return this.Get('RoleName');
+    }
+    set RoleName(value: string) {
+        this.Set('RoleName', value);
+    }
+
+    /**
+    * * Field Name: __mj_CreatedAt
+    * * Display Name: Created At
+    * * SQL Data Type: datetimeoffset
+    * * Default Value: getutcdate()
+    */
+    get __mj_CreatedAt(): Date {
+        return this.Get('__mj_CreatedAt');
+    }
+
+    /**
+    * * Field Name: __mj_UpdatedAt
+    * * Display Name: Updated At
+    * * SQL Data Type: datetimeoffset
+    * * Default Value: getutcdate()
+    */
+    get __mj_UpdatedAt(): Date {
+        return this.Get('__mj_UpdatedAt');
+    }
+}
+
+
+/**
+ * Organizations - strongly typed entity sub-class
+ * * Schema: abstracts
+ * * Base Table: Organization
+ * * Base View: vwOrganizations
+ * * @description Table to store organization information.
+ * * Primary Key: ID
+ * @extends {BaseEntity}
+ * @class
+ * @public
+ */
+@RegisterClass(BaseEntity, 'Organizations')
+export class OrganizationEntity extends BaseEntity<OrganizationEntityType> {
+    /**
+    * Loads the Organizations record from the database
+    * @param ID: number - primary key value to load the Organizations record.
+    * @param EntityRelationshipsToLoad - (optional) the relationships to load
+    * @returns {Promise<boolean>} - true if successful, false otherwise
+    * @public
+    * @async
+    * @memberof OrganizationEntity
+    * @method
+    * @override
+    */
+    public async Load(ID: number, EntityRelationshipsToLoad?: string[]) : Promise<boolean> {
+        const compositeKey: CompositeKey = new CompositeKey();
+        compositeKey.KeyValuePairs.push({ FieldName: 'ID', Value: ID });
+        return await super.InnerLoad(compositeKey, EntityRelationshipsToLoad);
+    }
+
+    /**
+    * * Field Name: ID
+    * * Display Name: ID
+    * * SQL Data Type: int
+    * * Description: Primary key identifier for the organization.
+    */
+    get ID(): number {
+        return this.Get('ID');
+    }
+
+    /**
+    * * Field Name: Name
+    * * Display Name: Name
+    * * SQL Data Type: nvarchar(255)
+    * * Description: Name of the organization.
+    */
+    get Name(): string {
+        return this.Get('Name');
+    }
+    set Name(value: string) {
+        this.Set('Name', value);
+    }
+
+    /**
+    * * Field Name: __mj_CreatedAt
+    * * Display Name: Created At
+    * * SQL Data Type: datetimeoffset
+    * * Default Value: getutcdate()
+    */
+    get __mj_CreatedAt(): Date {
+        return this.Get('__mj_CreatedAt');
+    }
+
+    /**
+    * * Field Name: __mj_UpdatedAt
+    * * Display Name: Updated At
+    * * SQL Data Type: datetimeoffset
+    * * Default Value: getutcdate()
+    */
+    get __mj_UpdatedAt(): Date {
+        return this.Get('__mj_UpdatedAt');
+    }
+}
+
 
 /**
  * Persons - strongly typed entity sub-class
@@ -440,6 +767,41 @@ export class PersonEntity extends BaseEntity<PersonEntityType> {
     */
     get __mj_UpdatedAt(): Date {
         return this.Get('__mj_UpdatedAt');
+    }
+
+    /**
+    * * Field Name: OrganizationID
+    * * Display Name: Organization ID
+    * * SQL Data Type: int
+    * * Related Entity/Foreign Key: Organizations (vwOrganizations.ID)
+    */
+    get OrganizationID(): number | null {
+        return this.Get('OrganizationID');
+    }
+    set OrganizationID(value: number | null) {
+        this.Set('OrganizationID', value);
+    }
+
+    /**
+    * * Field Name: OrganizationRoleID
+    * * Display Name: Organization Role ID
+    * * SQL Data Type: int
+    * * Related Entity/Foreign Key: Organization Roles (vwOrganizationRoles.ID)
+    */
+    get OrganizationRoleID(): number | null {
+        return this.Get('OrganizationRoleID');
+    }
+    set OrganizationRoleID(value: number | null) {
+        this.Set('OrganizationRoleID', value);
+    }
+
+    /**
+    * * Field Name: Organization
+    * * Display Name: Organization
+    * * SQL Data Type: nvarchar(255)
+    */
+    get Organization(): string | null {
+        return this.Get('Organization');
     }
 }
 
@@ -1197,6 +1559,18 @@ export class SubmissionEntity extends BaseEntity<SubmissionEntityType> {
     }
     set SubmissionTypeID(value: string) {
         this.Set('SubmissionTypeID', value);
+    }
+
+    /**
+    * * Field Name: FieldOfStudyID
+    * * Display Name: Field Of Study ID
+    * * SQL Data Type: int
+    */
+    get FieldOfStudyID(): number {
+        return this.Get('FieldOfStudyID');
+    }
+    set FieldOfStudyID(value: number) {
+        this.Set('FieldOfStudyID', value);
     }
 
     /**

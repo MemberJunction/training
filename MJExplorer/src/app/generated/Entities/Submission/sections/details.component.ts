@@ -49,6 +49,13 @@ import { SubmissionEntity } from 'mj_generatedentities';
         <mj-form-field 
             [record]="record"
             [ShowLabel]="true"
+            FieldName="FieldOfStudyID"
+            Type="numerictextbox"
+            [EditMode]="EditMode"
+        ></mj-form-field>
+        <mj-form-field 
+            [record]="record"
+            [ShowLabel]="true"
             FieldName="Status"
             Type="textbox"
             [EditMode]="EditMode"

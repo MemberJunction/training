@@ -17,7 +17,7 @@ import { DataSource } from 'typeorm';
 import * as mj_core_schema_server_object_types from '@memberjunction/server'
 
 
-import { SubmissionTypeEntity, SubmissionPersonEntity, SubmissionRoleEntity, SubmissionEntity, ReviewEntity, ReviewerRoleEntity, PersonEntity } from 'mj_generatedentities';
+import { SubmissionTypeEntity, SubmissionPersonEntity, OrganizationEntity, SubmissionRoleEntity, SubmissionEntity, ReviewEntity, FieldOfStudyEntity, OrganizationRoleEntity, ReviewerRoleEntity, PersonEntity } from 'mj_generatedentities';
     
 
 //****************************************************************************
@@ -390,6 +390,142 @@ export class SubmissionPersonResolver extends ResolverBase {
 }
 
 //****************************************************************************
+// ENTITY CLASS for Organizations
+//****************************************************************************
+@ObjectType({ description: 'Table to store organization information.' })
+export class Organization_ {
+    @Field(() => Int, {description: 'Primary key identifier for the organization.'}) 
+    ID: number;
+        
+    @Field({description: 'Name of the organization.'}) 
+    @MaxLength(510)
+    Name: string;
+        
+    @Field() 
+    @MaxLength(10)
+    _mj__CreatedAt: Date;
+        
+    @Field() 
+    @MaxLength(10)
+    _mj__UpdatedAt: Date;
+        
+    @Field(() => [Person_])
+    Persons_OrganizationIDArray: Person_[]; // Link to Persons
+    
+}
+
+//****************************************************************************
+// INPUT TYPE for Organizations
+//****************************************************************************
+@InputType()
+export class CreateOrganizationInput {
+    @Field()
+    Name: string;
+}
+    
+
+//****************************************************************************
+// INPUT TYPE for Organizations
+//****************************************************************************
+@InputType()
+export class UpdateOrganizationInput {
+    @Field(() => Int)
+    ID: number;
+
+    @Field()
+    Name: string;
+
+    @Field(() => [KeyValuePairInput], { nullable: true })
+    OldValues___?: KeyValuePairInput[];
+}
+    
+//****************************************************************************
+// RESOLVER for Organizations
+//****************************************************************************
+@ObjectType()
+export class RunOrganizationViewResult {
+    @Field(() => [Organization_])
+    Results: Organization_[];
+
+    @Field(() => String, {nullable: true})
+    UserViewRunID?: string;
+
+    @Field(() => Int, {nullable: true})
+    RowCount: number;
+
+    @Field(() => Int, {nullable: true})
+    TotalRowCount: number;
+
+    @Field(() => Int, {nullable: true})
+    ExecutionTime: number;
+
+    @Field({nullable: true})
+    ErrorMessage?: string;
+
+    @Field(() => Boolean, {nullable: false})
+    Success: boolean;
+}
+
+@Resolver(Organization_)
+export class OrganizationResolver extends ResolverBase {
+    @Query(() => RunOrganizationViewResult)
+    async RunOrganizationViewByID(@Arg('input', () => RunViewByIDInput) input: RunViewByIDInput, @Ctx() { dataSource, userPayload }: AppContext, @PubSub() pubSub: PubSubEngine) {
+        return super.RunViewByIDGeneric(input, dataSource, userPayload, pubSub);
+    }
+
+    @Query(() => RunOrganizationViewResult)
+    async RunOrganizationViewByName(@Arg('input', () => RunViewByNameInput) input: RunViewByNameInput, @Ctx() { dataSource, userPayload }: AppContext, @PubSub() pubSub: PubSubEngine) {
+        return super.RunViewByNameGeneric(input, dataSource, userPayload, pubSub);
+    }
+
+    @Query(() => RunOrganizationViewResult)
+    async RunOrganizationDynamicView(@Arg('input', () => RunDynamicViewInput) input: RunDynamicViewInput, @Ctx() { dataSource, userPayload }: AppContext, @PubSub() pubSub: PubSubEngine) {
+        input.EntityName = 'Organizations';
+        return super.RunDynamicViewGeneric(input, dataSource, userPayload, pubSub);
+    }
+    @Query(() => Organization_, { nullable: true })
+    async Organization(@Arg('ID', () => Int) ID: number, @Ctx() { dataSource, userPayload }: AppContext, @PubSub() pubSub: PubSubEngine): Promise<Organization_ | null> {
+        this.CheckUserReadPermissions('Organizations', userPayload);
+        const sSQL = `SELECT * FROM [abstracts].[vwOrganizations] WHERE [ID]=${ID} ` + this.getRowLevelSecurityWhereClause('Organizations', userPayload, EntityPermissionType.Read, 'AND');
+        const result = this.MapFieldNamesToCodeNames('Organizations', await dataSource.query(sSQL).then((r) => r && r.length > 0 ? r[0] : {}))
+        return result;
+    }
+    
+    @FieldResolver(() => [Person_])
+    async Persons_OrganizationIDArray(@Root() organization_: Organization_, @Ctx() { dataSource, userPayload }: AppContext, @PubSub() pubSub: PubSubEngine) {
+        this.CheckUserReadPermissions('Persons', userPayload);
+        const sSQL = `SELECT * FROM [abstracts].[vwPersons] WHERE [OrganizationID]=${organization_.ID} ` + this.getRowLevelSecurityWhereClause('Persons', userPayload, EntityPermissionType.Read, 'AND');
+        const result = this.ArrayMapFieldNamesToCodeNames('Persons', await dataSource.query(sSQL));
+        return result;
+    }
+        
+    @Mutation(() => Organization_)
+    async CreateOrganization(
+        @Arg('input', () => CreateOrganizationInput) input: CreateOrganizationInput,
+        @Ctx() { dataSource, userPayload }: AppContext,
+        @PubSub() pubSub: PubSubEngine
+    ) {
+        return this.CreateRecord('Organizations', input, dataSource, userPayload, pubSub)
+    }
+        
+    @Mutation(() => Organization_)
+    async UpdateOrganization(
+        @Arg('input', () => UpdateOrganizationInput) input: UpdateOrganizationInput,
+        @Ctx() { dataSource, userPayload }: AppContext,
+        @PubSub() pubSub: PubSubEngine
+    ) {
+        return this.UpdateRecord('Organizations', input, dataSource, userPayload, pubSub);
+    }
+    
+    @Mutation(() => Organization_)
+    async DeleteOrganization(@Arg('ID', () => Int) ID: number, @Arg('options___', () => DeleteOptionsInput) options: DeleteOptionsInput, @Ctx() { dataSource, userPayload }: AppContext, @PubSub() pubSub: PubSubEngine) {
+        const key = new CompositeKey([{FieldName: 'ID', Value: ID}]);
+        return this.DeleteRecord('Organizations', key, options, dataSource, userPayload, pubSub);
+    }
+    
+}
+
+//****************************************************************************
 // ENTITY CLASS for Submission Roles
 //****************************************************************************
 @ObjectType({ description: 'Roles associated with submission-person relationships.' })
@@ -576,6 +712,9 @@ export class Submission_ {
     @MaxLength(16)
     SubmissionTypeID: string;
         
+    @Field(() => Int) 
+    FieldOfStudyID: number;
+        
     @Field() 
     @MaxLength(100)
     Status: string;
@@ -620,6 +759,9 @@ export class CreateSubmissionInput {
     @Field()
     SubmissionTypeID: string;
 
+    @Field(() => Int)
+    FieldOfStudyID: number;
+
     @Field()
     Status: string;
 }
@@ -647,6 +789,9 @@ export class UpdateSubmissionInput {
 
     @Field()
     SubmissionTypeID: string;
+
+    @Field(() => Int)
+    FieldOfStudyID: number;
 
     @Field()
     Status: string;
@@ -945,6 +1090,267 @@ export class ReviewResolver extends ResolverBase {
 }
 
 //****************************************************************************
+// ENTITY CLASS for Field Of Studies
+//****************************************************************************
+@ObjectType({ description: 'Table to store fields of study.' })
+export class FieldOfStudy_ {
+    @Field(() => Int, {description: 'Primary key identifier for the field of study.'}) 
+    ID: number;
+        
+    @Field({description: 'The name of the field of study.'}) 
+    @MaxLength(510)
+    NameOfField: string;
+        
+    @Field() 
+    @MaxLength(10)
+    _mj__CreatedAt: Date;
+        
+    @Field() 
+    @MaxLength(10)
+    _mj__UpdatedAt: Date;
+        
+}
+
+//****************************************************************************
+// INPUT TYPE for Field Of Studies
+//****************************************************************************
+@InputType()
+export class CreateFieldOfStudyInput {
+    @Field()
+    NameOfField: string;
+}
+    
+
+//****************************************************************************
+// INPUT TYPE for Field Of Studies
+//****************************************************************************
+@InputType()
+export class UpdateFieldOfStudyInput {
+    @Field(() => Int)
+    ID: number;
+
+    @Field()
+    NameOfField: string;
+
+    @Field(() => [KeyValuePairInput], { nullable: true })
+    OldValues___?: KeyValuePairInput[];
+}
+    
+//****************************************************************************
+// RESOLVER for Field Of Studies
+//****************************************************************************
+@ObjectType()
+export class RunFieldOfStudyViewResult {
+    @Field(() => [FieldOfStudy_])
+    Results: FieldOfStudy_[];
+
+    @Field(() => String, {nullable: true})
+    UserViewRunID?: string;
+
+    @Field(() => Int, {nullable: true})
+    RowCount: number;
+
+    @Field(() => Int, {nullable: true})
+    TotalRowCount: number;
+
+    @Field(() => Int, {nullable: true})
+    ExecutionTime: number;
+
+    @Field({nullable: true})
+    ErrorMessage?: string;
+
+    @Field(() => Boolean, {nullable: false})
+    Success: boolean;
+}
+
+@Resolver(FieldOfStudy_)
+export class FieldOfStudyResolver extends ResolverBase {
+    @Query(() => RunFieldOfStudyViewResult)
+    async RunFieldOfStudyViewByID(@Arg('input', () => RunViewByIDInput) input: RunViewByIDInput, @Ctx() { dataSource, userPayload }: AppContext, @PubSub() pubSub: PubSubEngine) {
+        return super.RunViewByIDGeneric(input, dataSource, userPayload, pubSub);
+    }
+
+    @Query(() => RunFieldOfStudyViewResult)
+    async RunFieldOfStudyViewByName(@Arg('input', () => RunViewByNameInput) input: RunViewByNameInput, @Ctx() { dataSource, userPayload }: AppContext, @PubSub() pubSub: PubSubEngine) {
+        return super.RunViewByNameGeneric(input, dataSource, userPayload, pubSub);
+    }
+
+    @Query(() => RunFieldOfStudyViewResult)
+    async RunFieldOfStudyDynamicView(@Arg('input', () => RunDynamicViewInput) input: RunDynamicViewInput, @Ctx() { dataSource, userPayload }: AppContext, @PubSub() pubSub: PubSubEngine) {
+        input.EntityName = 'Field Of Studies';
+        return super.RunDynamicViewGeneric(input, dataSource, userPayload, pubSub);
+    }
+    @Query(() => FieldOfStudy_, { nullable: true })
+    async FieldOfStudy(@Arg('ID', () => Int) ID: number, @Ctx() { dataSource, userPayload }: AppContext, @PubSub() pubSub: PubSubEngine): Promise<FieldOfStudy_ | null> {
+        this.CheckUserReadPermissions('Field Of Studies', userPayload);
+        const sSQL = `SELECT * FROM [abstracts].[vwFieldOfStudies] WHERE [ID]=${ID} ` + this.getRowLevelSecurityWhereClause('Field Of Studies', userPayload, EntityPermissionType.Read, 'AND');
+        const result = this.MapFieldNamesToCodeNames('Field Of Studies', await dataSource.query(sSQL).then((r) => r && r.length > 0 ? r[0] : {}))
+        return result;
+    }
+    
+    @Mutation(() => FieldOfStudy_)
+    async CreateFieldOfStudy(
+        @Arg('input', () => CreateFieldOfStudyInput) input: CreateFieldOfStudyInput,
+        @Ctx() { dataSource, userPayload }: AppContext,
+        @PubSub() pubSub: PubSubEngine
+    ) {
+        return this.CreateRecord('Field Of Studies', input, dataSource, userPayload, pubSub)
+    }
+        
+    @Mutation(() => FieldOfStudy_)
+    async UpdateFieldOfStudy(
+        @Arg('input', () => UpdateFieldOfStudyInput) input: UpdateFieldOfStudyInput,
+        @Ctx() { dataSource, userPayload }: AppContext,
+        @PubSub() pubSub: PubSubEngine
+    ) {
+        return this.UpdateRecord('Field Of Studies', input, dataSource, userPayload, pubSub);
+    }
+    
+    @Mutation(() => FieldOfStudy_)
+    async DeleteFieldOfStudy(@Arg('ID', () => Int) ID: number, @Arg('options___', () => DeleteOptionsInput) options: DeleteOptionsInput, @Ctx() { dataSource, userPayload }: AppContext, @PubSub() pubSub: PubSubEngine) {
+        const key = new CompositeKey([{FieldName: 'ID', Value: ID}]);
+        return this.DeleteRecord('Field Of Studies', key, options, dataSource, userPayload, pubSub);
+    }
+    
+}
+
+//****************************************************************************
+// ENTITY CLASS for Organization Roles
+//****************************************************************************
+@ObjectType({ description: 'Table to store roles within an organization.' })
+export class OrganizationRole_ {
+    @Field(() => Int, {description: 'Primary key identifier for the organization role.'}) 
+    ID: number;
+        
+    @Field({description: 'Name of the role in the organization.'}) 
+    @MaxLength(510)
+    RoleName: string;
+        
+    @Field() 
+    @MaxLength(10)
+    _mj__CreatedAt: Date;
+        
+    @Field() 
+    @MaxLength(10)
+    _mj__UpdatedAt: Date;
+        
+    @Field(() => [Person_])
+    Persons_OrganizationRoleIDArray: Person_[]; // Link to Persons
+    
+}
+
+//****************************************************************************
+// INPUT TYPE for Organization Roles
+//****************************************************************************
+@InputType()
+export class CreateOrganizationRoleInput {
+    @Field()
+    RoleName: string;
+}
+    
+
+//****************************************************************************
+// INPUT TYPE for Organization Roles
+//****************************************************************************
+@InputType()
+export class UpdateOrganizationRoleInput {
+    @Field(() => Int)
+    ID: number;
+
+    @Field()
+    RoleName: string;
+
+    @Field(() => [KeyValuePairInput], { nullable: true })
+    OldValues___?: KeyValuePairInput[];
+}
+    
+//****************************************************************************
+// RESOLVER for Organization Roles
+//****************************************************************************
+@ObjectType()
+export class RunOrganizationRoleViewResult {
+    @Field(() => [OrganizationRole_])
+    Results: OrganizationRole_[];
+
+    @Field(() => String, {nullable: true})
+    UserViewRunID?: string;
+
+    @Field(() => Int, {nullable: true})
+    RowCount: number;
+
+    @Field(() => Int, {nullable: true})
+    TotalRowCount: number;
+
+    @Field(() => Int, {nullable: true})
+    ExecutionTime: number;
+
+    @Field({nullable: true})
+    ErrorMessage?: string;
+
+    @Field(() => Boolean, {nullable: false})
+    Success: boolean;
+}
+
+@Resolver(OrganizationRole_)
+export class OrganizationRoleResolver extends ResolverBase {
+    @Query(() => RunOrganizationRoleViewResult)
+    async RunOrganizationRoleViewByID(@Arg('input', () => RunViewByIDInput) input: RunViewByIDInput, @Ctx() { dataSource, userPayload }: AppContext, @PubSub() pubSub: PubSubEngine) {
+        return super.RunViewByIDGeneric(input, dataSource, userPayload, pubSub);
+    }
+
+    @Query(() => RunOrganizationRoleViewResult)
+    async RunOrganizationRoleViewByName(@Arg('input', () => RunViewByNameInput) input: RunViewByNameInput, @Ctx() { dataSource, userPayload }: AppContext, @PubSub() pubSub: PubSubEngine) {
+        return super.RunViewByNameGeneric(input, dataSource, userPayload, pubSub);
+    }
+
+    @Query(() => RunOrganizationRoleViewResult)
+    async RunOrganizationRoleDynamicView(@Arg('input', () => RunDynamicViewInput) input: RunDynamicViewInput, @Ctx() { dataSource, userPayload }: AppContext, @PubSub() pubSub: PubSubEngine) {
+        input.EntityName = 'Organization Roles';
+        return super.RunDynamicViewGeneric(input, dataSource, userPayload, pubSub);
+    }
+    @Query(() => OrganizationRole_, { nullable: true })
+    async OrganizationRole(@Arg('ID', () => Int) ID: number, @Ctx() { dataSource, userPayload }: AppContext, @PubSub() pubSub: PubSubEngine): Promise<OrganizationRole_ | null> {
+        this.CheckUserReadPermissions('Organization Roles', userPayload);
+        const sSQL = `SELECT * FROM [abstracts].[vwOrganizationRoles] WHERE [ID]=${ID} ` + this.getRowLevelSecurityWhereClause('Organization Roles', userPayload, EntityPermissionType.Read, 'AND');
+        const result = this.MapFieldNamesToCodeNames('Organization Roles', await dataSource.query(sSQL).then((r) => r && r.length > 0 ? r[0] : {}))
+        return result;
+    }
+    
+    @FieldResolver(() => [Person_])
+    async Persons_OrganizationRoleIDArray(@Root() organizationrole_: OrganizationRole_, @Ctx() { dataSource, userPayload }: AppContext, @PubSub() pubSub: PubSubEngine) {
+        this.CheckUserReadPermissions('Persons', userPayload);
+        const sSQL = `SELECT * FROM [abstracts].[vwPersons] WHERE [OrganizationRoleID]=${organizationrole_.ID} ` + this.getRowLevelSecurityWhereClause('Persons', userPayload, EntityPermissionType.Read, 'AND');
+        const result = this.ArrayMapFieldNamesToCodeNames('Persons', await dataSource.query(sSQL));
+        return result;
+    }
+        
+    @Mutation(() => OrganizationRole_)
+    async CreateOrganizationRole(
+        @Arg('input', () => CreateOrganizationRoleInput) input: CreateOrganizationRoleInput,
+        @Ctx() { dataSource, userPayload }: AppContext,
+        @PubSub() pubSub: PubSubEngine
+    ) {
+        return this.CreateRecord('Organization Roles', input, dataSource, userPayload, pubSub)
+    }
+        
+    @Mutation(() => OrganizationRole_)
+    async UpdateOrganizationRole(
+        @Arg('input', () => UpdateOrganizationRoleInput) input: UpdateOrganizationRoleInput,
+        @Ctx() { dataSource, userPayload }: AppContext,
+        @PubSub() pubSub: PubSubEngine
+    ) {
+        return this.UpdateRecord('Organization Roles', input, dataSource, userPayload, pubSub);
+    }
+    
+    @Mutation(() => OrganizationRole_)
+    async DeleteOrganizationRole(@Arg('ID', () => Int) ID: number, @Arg('options___', () => DeleteOptionsInput) options: DeleteOptionsInput, @Ctx() { dataSource, userPayload }: AppContext, @PubSub() pubSub: PubSubEngine) {
+        const key = new CompositeKey([{FieldName: 'ID', Value: ID}]);
+        return this.DeleteRecord('Organization Roles', key, options, dataSource, userPayload, pubSub);
+    }
+    
+}
+
+//****************************************************************************
 // ENTITY CLASS for Reviewer Roles
 //****************************************************************************
 @ObjectType({ description: 'Roles associated with reviewer assignments.' })
@@ -1133,6 +1539,16 @@ export class Person_ {
     @MaxLength(10)
     _mj__UpdatedAt: Date;
         
+    @Field(() => Int, {nullable: true}) 
+    OrganizationID?: number;
+        
+    @Field(() => Int, {nullable: true}) 
+    OrganizationRoleID?: number;
+        
+    @Field({nullable: true}) 
+    @MaxLength(510)
+    Organization?: string;
+        
     @Field(() => [Review_])
     Reviews_ReviewerIDArray: Review_[]; // Link to Reviews
     
@@ -1154,6 +1570,12 @@ export class CreatePersonInput {
 
     @Field()
     Email: string;
+
+    @Field(() => Int, { nullable: true })
+    OrganizationID?: number;
+
+    @Field(() => Int, { nullable: true })
+    OrganizationRoleID?: number;
 }
     
 
@@ -1173,6 +1595,12 @@ export class UpdatePersonInput {
 
     @Field()
     Email: string;
+
+    @Field(() => Int, { nullable: true })
+    OrganizationID?: number;
+
+    @Field(() => Int, { nullable: true })
+    OrganizationRoleID?: number;
 
     @Field(() => [KeyValuePairInput], { nullable: true })
     OldValues___?: KeyValuePairInput[];
