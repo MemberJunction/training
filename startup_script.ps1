@@ -2,6 +2,17 @@
 cd $PSScriptRoot
 
 # CustomServerEntities
+Write-Output "Switching to the 'GeneratedEntities' directory..."
+cd .\GeneratedEntities\
+Write-Output "Installing dependencies for 'GeneratedEntities'..."
+npm install
+Write-Output "Building 'GeneratedEntities'..."
+npm run build
+
+# Return to the root directory
+cd ..
+
+# CustomServerEntities
 Write-Output "Switching to the 'CustomServerEntities' directory..."
 cd .\CustomServerEntities\
 Write-Output "Linking 'GeneratedEntities' in 'CustomServerEntities'..."
