@@ -1,0 +1,124 @@
+
+.new-submission {
+    margin: 3rem auto;
+    max-width: 50em;
+}
+
+.new-submission h1 {
+    color: #587B7F;
+}
+
+.new-submission h1:before {
+    content: '';
+    display: block;
+    width: 2rem;
+    height: .5rem;
+    background: #E2C044;
+    margin-bottom: .25rem;
+}
+
+.new-submission__field {
+    margin-bottom: 1.5rem;
+}
+
+.new-submission__field label {
+    display: block;
+    font-size: 1.15rem;
+    color: #1E2019;
+    font-weight: 500;
+}
+
+.new-submission__field input, .new-submission__field textarea {
+    display: block;
+    width: 100%;
+    padding: 1rem;
+    border: 2px solid #EFEFEF;
+    box-sizing: border-box;
+    transition: border-color .3s;
+    border-radius: .5rem;
+}
+
+    .new-submission__field textarea {
+        min-height: 16rem;
+    }
+
+.new-submission__field input:focus, .new-submission__field textarea:focus {
+    border: 2px solid #587B7F;
+    outline: none;
+}
+
+.new-submission__btn, .step-navigation {
+    text-align: center;
+}
+
+.btn {
+    display: inline-block;
+    padding: .75rem 1.75rem;
+    color: #393E41;
+    font-weight: 700;
+    font-size: 1.15rem;
+    cursor: pointer;
+    border: 2px solid #E2C044;
+    background-color: #E2C044;
+    border-radius: .5rem;
+    transition: .3s;
+}
+
+.step-navigation .btn:nth-of-type(2) {
+    margin-left: 1.5rem;
+}
+
+.btn:hover {
+    border-color: #393E41;
+}
+
+.new-submission__btn .btn {
+    color: #FFF;
+    border: 2px solid #587B7F;
+    background-color: #587B7F;
+    margin-bottom: 3rem;
+}
+
+.new-submission__btn .btn:hover {
+    border-color: #E2C044;
+    background-color: #E2C044;
+}
+
+.new-submission .k-stepper {
+    margin: 2rem 0;
+}
+
+.new-submission__list {
+    font-size: 1.15rem;
+    padding: 0;
+    margin: 0;
+    list-style: none;
+    counter-reset: my-counter;
+    margin-bottom: 1.5rem;
+}
+
+.new-submission__list li {
+    counter-increment: my-counter;
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    padding: 2rem 1rem;
+    border-bottom: 2px solid #EFEFEF;
+}
+
+.new-submission__list li:before {
+    content: counter(my-counter) ". ";
+    color: #E2C044;
+    font-size: 1.5rem;
+}
+
+.new-submission__checkbox {
+    display: flex;
+    gap: .5rem;
+    align-items: center;
+}
+
+.new-submission__checkbox input {
+    width: 1.25rem;
+    height: 1.25rem;
+}
