@@ -4,8 +4,6 @@
   <meta charset="UTF-8">
   <title>MemberJunction Angular Elements Demo</title>
   <script src="dist/mj-angular-elements-demo-complete.js"></script>
-  <!-- Include MemberJunctionGraphQLDataProvider.js -->
-  <script src="../../../MemberJunction/GraphQLDataProvider/dist-browser/MemberJunctionGraphQLDataProvider.js"></script>
   <style>
     /* Add this CSS */
     .container {
@@ -37,10 +35,10 @@
         const entityList = document.querySelector('mj-entity-list-demo');
         const entityDetail = document.querySelector('mj-entity-detail-demo');
         if(entityList) {
-        entityList.addEventListener('rowClicked', entityInfo => {
-            // need to set the entityDetailComponent.entity property now to match what the user clicked on in the Entity List component
-            entityDetail.entity = entityInfo.detail;
-        });
+          entityList.addEventListener('rowClicked', entityInfo => {
+              // need to set the entityDetailComponent.entity property now to match what the user clicked on in the Entity List component
+              entityDetail.entity = entityInfo.detail;
+          });
         }
 
         // Variables for setup (replace with actual values)
