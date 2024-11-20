@@ -4,6 +4,7 @@ import { HomeComponent } from './home/home.component';
 import { NoAccessComponent } from './no-access/no-access.component';
 import { NewSubmission } from './new-submission/new-submission.component';
 import { SubmissionsList } from './submissions-list/submissions-list.component';
+import { ReviewsList } from './reviews-list/reviews-list.component';
 
 const routes: Routes = [
   { 
@@ -18,6 +19,10 @@ const routes: Routes = [
   { 
     path: 'submissions-list',
     component: SubmissionsList
+  },
+  {
+    path: 'reviews',
+    component: ReviewsList
   },
   { 
     path: 'no-access',

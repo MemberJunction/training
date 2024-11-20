@@ -1,0 +1,29 @@
+<div>
+    @if(!reviewsLoaded){
+        <kendo-loader type="infinite-spinner"/>
+    }
+    @else {
+        List of Reviews 
+        <div class="list">
+            @for (review of Reviews; track review) {
+            <div class="list-item">
+                <div>
+                    Review ID: {{review.ID}}
+                </div>
+                <div>
+                    Submission ID: {{review.SubmissionID}}
+                </div>
+                <div>
+                    Reviewer ID: {{review.ReviewerID}}
+                </div>
+                <div>
+                    Score: {{review.Score}}
+                </div>
+                <div>
+                    Comments: {{review.Comments}}
+                </div>
+            </div>
+            }
+        </div>
+    }
+</div>

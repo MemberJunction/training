@@ -32,10 +32,13 @@ import { SplitterModule } from '@progress/kendo-angular-layout';
 
 import { BreadcrumbComponent } from './breadcrumb/breadcrumb.component';
 
+import { StepperModule } from '@progress/kendo-angular-layout';
+
 import { MenuModule } from '@progress/kendo-angular-menu';
 import { PDFExportModule } from "@progress/kendo-angular-pdf-export";
 import { NewSubmission } from './new-submission/new-submission.component';
 import { SubmissionsList } from './submissions-list/submissions-list.component';
+import { ReviewsList } from './reviews-list/reviews-list.component';
 
 
 @NgModule({
@@ -48,7 +51,8 @@ import { SubmissionsList } from './submissions-list/submissions-list.component';
     NumberSuffixPipe,
     BreadcrumbComponent,
     NewSubmission,
-    SubmissionsList
+    SubmissionsList,
+    ReviewsList
   ],
   imports: [
     BrowserModule,
@@ -77,6 +81,7 @@ import { SubmissionsList } from './submissions-list/submissions-list.component';
     ListViewModule,
     PanelBarModule,
     SplitterModule,
+    StepperModule,
     MenuModule,
     PDFExportModule,
   ],
