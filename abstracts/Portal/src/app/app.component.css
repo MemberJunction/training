@@ -59,3 +59,33 @@ app-side-nav {
 .main-content {
    flex: 1; /* Take up the remaining space */
 }
+
+.new-submission .k-step-current .k-step-indicator {
+   border-color: #587B7F;
+   background-color: #587B7F;
+}  
+
+.new-submission .k-step-done .k-step-indicator {
+   border-color: #E2C044;
+   background-color: #E2C044;
+}
+
+.new-submission .k-stepper .k-step-current:hover .k-step-indicator,
+.new-submission .k-stepper .k-step-current.k-hover .k-step-indicator, 
+.new-submission .k-stepper .k-step-current.k-step-hover .k-step-indicator {
+   border-color: #E2C044;
+   background-color: #E2C044;
+}
+
+.new-submission .k-stepper .k-step-done:hover .k-step-indicator, 
+.new-submission .k-stepper .k-step-done.k-hover .k-step-indicator,
+.new-submission .k-stepper .k-step-done.k-step-hover .k-step-indicator {
+   border-color: #E2C044;
+   background-color: #E2C044;
+}
+
+.new-submission .k-progressbar .k-selected {
+   border-color: #E2C044;
+   color: white;
+   background-color: #E2C044;
+}
