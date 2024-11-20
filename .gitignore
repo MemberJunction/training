@@ -1,3 +1,13 @@
+### Node ###
+# Logs
+logs
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+lerna-debug.log*
+.pnpm-debug.log*
+
 CodeGen/.env
 CodeGen/node_modules/**
 MJAPI/.env
@@ -18,3 +28,9 @@ CodeGen/codegen.output.txt
 .mjrc.yml
 install.config.json
 MemberJunction_Code_Bootstrap.zip
+
+# TypeScript cache
+*.tsbuildinfo
+
+# Temporary files
+tmp/
