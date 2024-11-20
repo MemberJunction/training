@@ -28,6 +28,32 @@ export class NewSubmission implements OnInit {
     });
   }
 
+  currentStep: number = 0;
+
+  steps = [
+    { label: 'Contact Info', icon: 'user' },
+    { label: 'Abstract Details', icon: 'list-unordered-outline' },
+    { label: 'Requirements & Acknowledgment', icon: 'info-circle' },
+    { label: 'Review', icon: 'check-circle' }
+  ];
+
+  onStepChange(event: number): void {
+    this.currentStep = event;
+    console.log('Current step:', this.currentStep);
+  }
+
+  goToNext(): void {
+    if (this.currentStep < this.steps.length - 1) {
+      this.currentStep++;
+    }
+  }
+
+  goToPrevious(): void {
+    if (this.currentStep > 0) {
+      this.currentStep--;
+    }
+  }
+
   public async onSave() {
     if (await this.submission.Save()) {
       this.router.navigate(['submissions-list']);

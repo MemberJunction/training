@@ -1,3 +1,4 @@
+
 .new-submission {
     margin: 3rem auto;
     max-width: 50em;
@@ -46,7 +47,7 @@
     outline: none;
 }
 
-.new-submission__btn {
+.new-submission__btn, .step-navigation {
     text-align: center;
 }
 
@@ -63,6 +64,31 @@
     transition: .3s;
 }
 
+.step-navigation .btn:nth-of-type(2) {
+    margin-left: 1.5rem;
+}
+
 .btn:hover {
     border-color: #393E41;
+}
+
+.new-submission__btn .btn {
+    color: #FFF;
+    border: 2px solid #587B7F;
+    background-color: #587B7F;
+    margin-bottom: 3rem;
+}
+
+.new-submission__btn .btn:hover {
+    border-color: #E2C044;
+    background-color: #E2C044;
+}
+
+.new-submission .k-stepper {
+    margin: 2rem 0;
+}
+
+.new-submission .k-step-current .k-step-indicator {
+    border-color: #587B7F !important;
+    background-color: #587B7F !important;
 }
