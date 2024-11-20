@@ -1,7 +1,7 @@
 export const environment = {
-  GRAPHQL_URI: 'http://localhost:4001/',
-  GRAPHQL_WS_URI: 'ws://localhost:4001/',
-  REDIRECT_URI: 'http://localhost:5500/',
+  GRAPHQL_URI: 'http://localhost:4000/',
+  GRAPHQL_WS_URI: 'ws://localhost:4000/',
+  REDIRECT_URI: 'http://localhost:4000/',
   CLIENT_ID: 'AXLwU3GZQDd7yAIUXIGFhptYJ5mgN6NA',
   CLIENT_AUTHORITY: 'dev-pb3zdwv3lfh86612.us.auth0.com',
   auth0ClientId: "AXLwU3GZQDd7yAIUXIGFhptYJ5mgN6NA",
