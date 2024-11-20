@@ -88,7 +88,37 @@
     margin: 2rem 0;
 }
 
-.new-submission .k-step-current .k-step-indicator {
-    border-color: #587B7F !important;
-    background-color: #587B7F !important;
+.new-submission__list {
+    font-size: 1.15rem;
+    padding: 0;
+    margin: 0;
+    list-style: none;
+    counter-reset: my-counter;
+    margin-bottom: 1.5rem;
+}
+
+.new-submission__list li {
+    counter-increment: my-counter;
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    padding: 2rem 1rem;
+    border-bottom: 2px solid #EFEFEF;
+}
+
+.new-submission__list li:before {
+    content: counter(my-counter) ". ";
+    color: #E2C044;
+    font-size: 1.5rem;
+}
+
+.new-submission__checkbox {
+    display: flex;
+    gap: .5rem;
+    align-items: center;
+}
+
+.new-submission__checkbox input {
+    width: 1.25rem;
+    height: 1.25rem;
 }

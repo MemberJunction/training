@@ -32,7 +32,16 @@
             </ng-container>
             <ng-container *ngIf="currentStep === 2">
                 <h2>Step 3: Abstract Requirements & Acknowledgment</h2>
-                <p>Fill in your address details here.</p>
+                <ol class="new-submission__list">
+                    <li>Your abstract submission must be 600 words or less.</li>
+                    <li>Your abstract submission must be the following formats: .pdf, .docx, .doc</li>
+                    <li>The submission must be in English.</li>
+                    <li>Limit the file size must not exceed 1.5 MB</li>
+                </ol>
+                <div class="new-submission__checkbox">
+                    <input type="checkbox" name="confirm" id="confirm">
+                    <label for="confirm">I acknowledge blah blah blah</label>
+                </div>
               </ng-container>
             <ng-container *ngIf="currentStep === 3">
               <h2>Step 3: Review</h2>
