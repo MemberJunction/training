@@ -5139,7 +5139,7 @@ type ResourcePermission_ {
   StartSharingAt: Timestamp
 
   """
-  Status of the resource permission request. Possible values are Requested, Approved, Rejected, or Revoked.
+  Status of the resource permission request. Possible values are Pending, Approved, Rejected, Revoked, or Requested.
   """
   Status: String!
 
