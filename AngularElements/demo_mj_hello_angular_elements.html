@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>MemberJunction Angular Elements Demo</title>
+  <script src="dist/mj-angular-elements-demo-complete.js"></script>
+</head>
+<body>
+  <mj-listener-demo></mj-listener-demo>
+  <mj-hello-world></mj-hello-world>
+  <div id="output-div">Output will appear here</div>
+
+  <script>
+    document.addEventListener("DOMContentLoaded", async function() {
+      // wire up the event handler for the Hello World component first
+      const helloWorldElement = document.querySelector('mj-hello-world');
+      if(helloWorldElement) {
+        helloWorldElement.addEventListener('display', event => {
+          document.querySelector('#output-div').innerText = event.detail;
+        });
+      }
+
+      // Variables for setup (replace with actual values)
+      const token = 'eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCIsImtpZCI6ImRORjIwbDYwODE5aUZwQ1dKanpYNyJ9.eyJuaWNrbmFtZSI6ImFtaXRoIiwibmFtZSI6ImFtaXRoQG5hZ2FyYWphbi5vcmciLCJwaWN0dXJlIjoiaHR0cHM6Ly9zLmdyYXZhdGFyLmNvbS9hdmF0YXIvNTFlODk0MTdkYWE4NTE5Y2E4ZTJlYzgyMjA1MWM3ZGU_cz00ODAmcj1wZyZkPWh0dHBzJTNBJTJGJTJGY2RuLmF1dGgwLmNvbSUyRmF2YXRhcnMlMkZhbS5wbmciLCJ1cGRhdGVkX2F0IjoiMjAyNC0xMS0xOVQxODo1ODoyOS4yNTlaIiwiZW1haWwiOiJhbWl0aEBuYWdhcmFqYW4ub3JnIiwiZW1haWxfdmVyaWZpZWQiOmZhbHNlLCJpc3MiOiJodHRwczovL2Rldi1wYjN6ZHd2M2xmaDg2NjEyLnVzLmF1dGgwLmNvbS8iLCJhdWQiOiJBWEx3VTNHWlFEZDd5QUlVWElHRmhwdFlKNW1nTjZOQSIsImlhdCI6MTczMjEzNDQ1MCwiZXhwIjoxNzMyMTcwNDUwLCJzdWIiOiJhdXRoMHw2NzNjZGMwYjk2MTRhNzU1YzU4Y2Y4NWMiLCJzaWQiOiJWTjJDR1pLUEJQQkV6NE1UU01UNU83aXNXN1BqRWhucyIsIm5vbmNlIjoiWW5KNlNFSlpkalJzZGxFeU1WQm9RVTFwZVZWVVNWRndZM1EyTkVFNVUwczFSa1phYzFaaE0wVnlTZz09In0.Rf_f0RzCBN--I360pMiMvX1vkllpifmbGjbZs0bEPeXraGcEeeRQ9pskvNKedlPzCQBKh69Q7msmWFNWR217KwxxrffyZ9zB-qQR4_ctLozaS4n93oFGeZwVpfXdSvE-7O8Rujwx46JxAR0jAOwVdtH_-tkwTQ_QEoTruEqV0YPvi1HT9Tt78Ylilh89vc1BQDT9QkApWbyB3ZnRFRpDt4lzE9-7cIlYgzBztT6jgC_0MB8n_3Yx_0gFbcOzih5b0sVXfaigFF1VNRw9mx8PCmmAaNUr1YO-LFMcqTd3QoKOHfA4sKWIGkVVhdznYauAcRGzptsJ0qCw0Ri8jRIp7w';
+      const url = 'http://localhost:4001';
+      const wsurl = 'ws://localhost:4001/';
+      const schemaName = '__mj'; // Replace with environment.MJ_CORE_SCHEMA_NAME if available
+
+      // Initialize GraphQL client
+      const setup = window["MJ_GraphQLSetup"];
+      await MJ_GraphQLSetup(token, url, wsurl, tokenRefreshed, schemaName, false);
+      console.log("GraphQL client initialized")
+    });
+
+    async function tokenRefreshed() {
+      console.log("Token refreshed: " + newToken);
+      return 'newToken';
+    }
+
+  </script>
+
+</body>
+</html>
