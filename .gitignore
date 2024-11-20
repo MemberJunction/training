@@ -2,6 +2,7 @@ CodeGen/.env
 CodeGen/node_modules/**
 MJAPI/.env
 MJAPI/node_modules/**
+MJAPI/dist/**
 MJExplorer/node_modules/**
 MJExplorer/.angular/**  
 CustomServerEntities/node_modules/**
@@ -12,6 +13,7 @@ GeneratedActions/node_modules/**
 GeneratedActions/dist/**
 abstracts/Portal/node_modules/**
 abstracts/Portal/.angular/**
+abstracts/Portal/dist/**
 CodeGen/codegen.output.txt
 .mjrc.yml
 install.config.json

@@ -1,9 +1,9 @@
 {
   "newUserSetup": {
-    "UserName": "AmithNagarajan",
-    "FirstName": "Amith",
-    "LastName": "Nagarajan",
-    "Email": "amith@bluecypress.io",
+    "UserName": "Jordan Fanapour",
+    "FirstName": "Jordan",
+    "LastName": "Fanapour",
+    "Email": "jordan.fanapour@bluecypress.io",
     "Roles": [
       "Developer",
       "Integration",
@@ -18,7 +18,7 @@
     },
     {
       "name": "skip_database_generation",
-      "value": false
+      "value": true
     }
   ],
   "logging": {
