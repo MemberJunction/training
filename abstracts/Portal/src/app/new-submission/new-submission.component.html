@@ -1,5 +1,5 @@
 <div class="new-submission">
-    <h1>New Submission Component</h1>
+    <h1>New Abstract Submission</h1>
     <kendo-stepper
         [steps]="steps"
         [(currentStep)]="currentStep"
@@ -14,7 +14,7 @@
               <h2>Step 1: Contact Information</h2>
               <div class="new-submission__field">
                 <label for="firstName">First Name</label>
-                <input type="text" id="firstName" name="firstName" [(ngModel)]="person.FirstName">
+                <input type="text" id="firstName" name="firstName" [(ngModel)]="person.FirstName" >
               </div>
               <div class="new-submission__field">
                 <label for="lastName">Last Name</label>
@@ -56,13 +56,16 @@
                 <li>The submission must be in English.</li>
                 <li>Limit the file size must not exceed 1.5 MB</li>
               </ol>
+              <div class="new-submission__upload">
+                <input type="file" id="fileInput" name="uploadedFile" required>
+              </div>
               <div class="new-submission__checkbox">
                 <input type="checkbox" name="confirm" id="confirm">
-                <label for="confirm">I acknowledge blah blah blah</label>
+                <label for="confirm">The content of this abstract is original and has not been previously published or presented elsewhere.</label>
               </div>
             </ng-container>
             <ng-container *ngIf="currentStep === 3">
-              <h2>Step 3: Review</h2>
+              <h2>Step 4: Review</h2>
               <p>Review and confirm your information.</p>
               <div class="new-submission__btn">
                 <button class="btn" (click)="onSave()" >Save</button>

@@ -1,0 +1,30 @@
+.submissions-list {
+    max-width: 50em;
+    margin: 3rem auto;
+}
+
+.submissions-list h1 {
+    color: #587B7F;
+}
+
+.submissions-list h1:before {
+    content: '';
+    display: block;
+    width: 2rem;
+    height: .5rem;
+    background: #E2C044;
+    margin-bottom: .25rem;
+}
+
+.submissions-list__list {
+    font-size: 1.15rem;
+    padding: 0;
+    margin: 0;
+    list-style: none;
+    margin-bottom: 1.5rem;
+}
+
+.submissions-list__list li {
+    padding: 2rem 1rem;
+    border-bottom: 2px solid #EFEFEF;
+}
