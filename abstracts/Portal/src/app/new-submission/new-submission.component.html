@@ -53,8 +53,12 @@
               </div>
               <div class="new-submission__field">
                 <label for="study">Field of Study</label>
-                <input type="text" id="study" name="study" [(ngModel)]="fieldOfStudyName">
+                <input type="text" id="study" name="study" [(ngModel)]="fieldOfStudyName" (ngModelChange)="checkFieldOfStudy($event)">
               </div>
+              <!-- Display the warning message if the organization does not exist -->
+              <div *ngIf="!fieldOfStudyExists" class="warning">
+                Field of Study does not exist. Please check the name.
+            </div>
             </ng-container>
             <ng-container *ngIf="currentStep === 2">
               <h2>Step 3: Abstract Requirements & Acknowledgment</h2>

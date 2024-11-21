@@ -19,6 +19,7 @@ export class NewSubmission implements OnInit {
 
   public organizationExists: boolean = true;
   public organizationRoleExists: boolean = true; 
+  public fieldOfStudyExists: boolean = true;
 
   private md: Metadata;
 
@@ -109,6 +110,9 @@ export class NewSubmission implements OnInit {
       return this.organizationExists && this.organizationRoleExists && 
              this.person.FirstName?.trim().length > 0 && this.person.LastName?.trim().length > 0 && 
              this.person.Email?.trim().length > 0;
+    } else if (this.currentStep === 1) {
+      return this.submission.FieldOfStudyID !== null && this.submission.FieldOfStudyID !== 0 &&
+             this.submission.Title?.trim().length > 0 && this.submission.Description?.trim().length > 0;
     }
     return false;
   }
@@ -155,5 +159,27 @@ export class NewSubmission implements OnInit {
     }
     // Reset when the input is empty
     this.organizationRoleExists = false;
+  }
+
+  async checkFieldOfStudy(value: string): Promise<void> {
+    if (this.fieldOfStudyName) {
+      const value = this.fieldOfStudyName.trim();
+      if (value !== '') {
+        // Simulate checking against a database
+        const rv = new RunView();
+        const result = await rv.RunView({
+          EntityName: 'Field Of Studies',
+          ExtraFilter: `NameOfField = '${value}'`
+        }, this.md.CurrentUser);
+
+        if (result.Success && result.Results.length > 0) {
+          this.submission.FieldOfStudyID = result.Results[0].ID;
+          this.fieldOfStudyExists = true;
+          return;
+        }
+      }
+    }
+    // Reset when the input is empty
+    this.fieldOfStudyExists = false;
   }
 }
