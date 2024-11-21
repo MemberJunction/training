@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Metadata } from '@memberjunction/core';
-import { SubmissionEntity } from 'mj_generatedentities';
+import { PersonEntity, SubmissionEntity, SubmissionPersonEntity } from 'mj_generatedentities';
 import { SharedService } from '../shared-service';
 import { Router } from '@angular/router';
 
@@ -12,6 +12,8 @@ import { Router } from '@angular/router';
 })
 export class NewSubmission implements OnInit {
   public submission: SubmissionEntity;
+  public person: PersonEntity;
+  public fieldOfStudyName: string;
 
   constructor (private sharedService: SharedService, private router: Router) {
 
@@ -43,7 +45,7 @@ export class NewSubmission implements OnInit {
   }
 
   goToNext(): void {
-    if (this.currentStep < this.steps.length - 1) {
+    if (this.currentStep < this.steps.length - 1 || this.fieldOfStudyName) {
       this.currentStep++;
     }
   }

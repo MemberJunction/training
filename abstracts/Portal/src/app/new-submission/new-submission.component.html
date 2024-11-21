@@ -8,41 +8,59 @@
     >
     </kendo-stepper>
 
-    
     @if (submission) {
         <div class="step-content">
             <ng-container *ngIf="currentStep === 0">
               <h2>Step 1: Contact Information</h2>
-                <div class="new-submission__field">
-                    <label for="title">Title</label>
-                    <input type="text" id="title" name="title" [(ngModel)]="submission.Title">
-                </div>
-                <div class="new-submission__field">
-                    <label for="description">Description</label>
-                    <textarea id="description" name="description" [(ngModel)]="submission.Description" ></textarea>
-                </div>
-                <div class="new-submission__field">
-                    <label for="contents">Contents</label>
-                    <textarea id="contents" name="contents" [(ngModel)]="submission.Contents"></textarea>
-                </div>
+              <div class="new-submission__field">
+                <label for="firstName">First Name</label>
+                <input type="text" id="firstName" name="firstName" [(ngModel)]="person.FirstName">
+              </div>
+              <div class="new-submission__field">
+                <label for="lastName">Last Name</label>
+                <input type="text" id="lastName" name="lastName" [(ngModel)]="person.LastName">
+              </div>
+              <div class="new-submission__field">
+                <label for="email">Email</label>
+                <input type="email" id="email" name="email" [(ngModel)]="person.Email">
+              </div>
+              <div class="new-submission__field">
+                <label for="organization">Organization</label>
+                <input type="text" id="organization" name="organization" [(ngModel)]="person.Organization">
+              </div>
+              <div class="new-submission__field">
+                <label for="role">Organization Role</label>
+                <input type="text" id="role" name="role" [(ngModel)]="person.OrganizationRoleID">
+              </div>
             </ng-container>
             <ng-container *ngIf="currentStep === 1">
               <h2>Step 2: Abstract Details</h2>
-              <p>Fill in your address details here.</p>
+              <div class="new-submission__field">
+                <label for="title">Title</label>
+                <input type="text" id="title" name="title" [(ngModel)]="submission.Title">
+              </div>
+              <div class="new-submission__field">
+                <label for="description">Description</label>
+                <input type="text" id="description" name="description" [(ngModel)]="submission.Description">
+              </div>
+              <div class="new-submission__field">
+                <label for="study">Field of Study</label>
+                <input type="text" id="study" name="study" [(ngModel)]="fieldOfStudyName">
+              </div>
             </ng-container>
             <ng-container *ngIf="currentStep === 2">
-                <h2>Step 3: Abstract Requirements & Acknowledgment</h2>
-                <ol class="new-submission__list">
-                    <li>Your abstract submission must be 600 words or less.</li>
-                    <li>Your abstract submission must be the following formats: .pdf, .docx, .doc</li>
-                    <li>The submission must be in English.</li>
-                    <li>Limit the file size must not exceed 1.5 MB</li>
-                </ol>
-                <div class="new-submission__checkbox">
-                    <input type="checkbox" name="confirm" id="confirm">
-                    <label for="confirm">I acknowledge blah blah blah</label>
-                </div>
-              </ng-container>
+              <h2>Step 3: Abstract Requirements & Acknowledgment</h2>
+              <ol class="new-submission__list">
+                <li>Your abstract submission must be 600 words or less.</li>
+                <li>Your abstract submission must be the following formats: .pdf, .docx, .doc</li>
+                <li>The submission must be in English.</li>
+                <li>Limit the file size must not exceed 1.5 MB</li>
+              </ol>
+              <div class="new-submission__checkbox">
+                <input type="checkbox" name="confirm" id="confirm">
+                <label for="confirm">I acknowledge blah blah blah</label>
+              </div>
+            </ng-container>
             <ng-container *ngIf="currentStep === 3">
               <h2>Step 3: Review</h2>
               <p>Review and confirm your information.</p>
