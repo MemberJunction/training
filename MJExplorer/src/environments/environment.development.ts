@@ -1,5 +1,5 @@
-export const environment = {"GRAPHQL_URI":"http://localhost:4001/",
-    "GRAPHQL_WS_URI":"ws://localhost:4001/",
+export const environment = {"GRAPHQL_URI":"http://localhost:4002/",
+    "GRAPHQL_WS_URI":"ws://localhost:4002/",
     "REDIRECT_URI":"http://localhost:4200/",
     "CLIENT_ID":"",
     "TENANT_ID":"",
