@@ -4,12 +4,12 @@ import { PersonEntity, SubmissionEntity, SubmissionPersonEntity } from 'mj_gener
 import { SharedService } from '../shared-service';
 import { Router } from '@angular/router';
 
-
 @Component({
   selector: 'app-new-submission',
   templateUrl: './new-submission.component.html',
   styleUrls: ['./new-submission.component.css']
 })
+
 export class NewSubmission implements OnInit {
   public submission: SubmissionEntity;
   public person: PersonEntity;
