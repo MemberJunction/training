@@ -26,11 +26,19 @@
               </div>
               <div class="new-submission__field">
                 <label for="organization">Organization</label>
-                <input type="text" id="organization" name="organization" [(ngModel)]="person.Organization">
+                <input type="text" id="organization" name="organization" [(ngModel)]="organization" (ngModelChange)="checkOrganization($event)" placeholder="Blue Cypress Family">
+                <!-- Display the warning message if the organization does not exist -->
+                <div *ngIf="!organizationExists" class="warning">
+                    Organization does not exist. Please check the name.
+                </div>
               </div>
               <div class="new-submission__field">
                 <label for="role">Organization Role</label>
-                <input type="text" id="role" name="role" [(ngModel)]="person.OrganizationRoleID">
+                <input type="text" id="role" name="role" [(ngModel)]="organizationRole" (ngModelChange)="checkOrganizationRole($event)" placeholder="Member">
+                <!-- Display the warning message if the organization does not exist -->
+                <div *ngIf="!organizationRoleExists" class="warning">
+                    Organization Role does not exist. Please check the name.
+                </div>
               </div>
             </ng-container>
             <ng-container *ngIf="currentStep === 1">
@@ -72,7 +80,7 @@
 
           <div class="step-navigation">
             <button class="btn" kendoButton [disabled]="currentStep === 0" (click)="goToPrevious()">Previous</button>
-            <button class="btn" kendoButton [disabled]="currentStep === steps.length - 1" (click)="goToNext()">Next</button>
+            <button class="btn" kendoButton [disabled]="!onReadyToMove() || currentStep === steps.length - 1" (click)="goToNext()">Next</button>
           </div>
     }
 </div>
