@@ -10,11 +10,13 @@ lerna-debug.log*
 
 CodeGen/.env
 CodeGen/node_modules/**
+CodeGen/dist/**
 MJAPI/.env
 MJAPI/node_modules/**
 MJAPI/dist/**
 MJExplorer/node_modules/**
 MJExplorer/.angular/**  
+MJExplorer/dist/**
 CustomServerEntities/node_modules/**
 CustomServerEntities/dist/**
 GeneratedEntities/node_modules/**
