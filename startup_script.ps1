@@ -58,16 +58,6 @@ npm install
 Write-Output "Building 'Portal'..."
 npm run build
 
-# Portal
-Write-Output "Switching to the 'abstracts/Portal' directory..."
-cd .\abstracts\Portal\
-Write-Output "Linking 'GeneratedActions' and 'GeneratedEntities' in 'Portal'..."
-npm link "..\..\GeneratedActions" "..\..\GeneratedEntities"
-Write-Output "Installing dependencies for 'Portal'..."
-npm install
-Write-Output "Building 'Portal'..."
-npm run build
-
 # Back to the root directory
 cd ../..
 
