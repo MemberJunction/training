@@ -18,7 +18,7 @@
     "lint": "concurrently \"npm:lint:eslint\" \"npm:lint:tsc\""
   },
   "author": "",
-  "license": "ISC",
+  "license": "BUSL-1.1",
   "dependencies": {
     "@memberjunction/codegen-lib": "2.12.1",
     "dotenv": "^16.4.1",
